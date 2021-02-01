@@ -1,0 +1,26 @@
+.dataset-layer-pane {
+
+    background: @component-background;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .dataset-layer-pane-header {
+        display: flex;
+        align-items: center;
+        border-bottom: solid 1px @border-color-split;
+
+        .dataset-layer-pane-minimize-btn {
+            border: none;
+        }
+
+        .dataset-layer-pane-title {
+            flex-grow: 1;
+            margin: 0 1em;
+        }
+    }
+
+    &.is-expanded {
+        width: 350px
+    }
+}

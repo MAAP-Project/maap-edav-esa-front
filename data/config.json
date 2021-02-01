@@ -1,0 +1,76 @@
+{
+  "map": {
+    "baseLayers": [
+      {
+        "id": "S2",
+        "name": "Sentinel-2",
+        "config": {
+          "id": "wmts",
+          "url": "https://{s}.s2maps-tiles.eu/wmts/1.0.0/{Layer}/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
+          "subdomains": ["a", "b", "c", "d", "e"],
+          "layer": "s2cloudless-2018_3857",
+          "style": "default",
+          "format": "image/jpeg",
+          "requestEncoding": "REST",
+          "matrixSet": "g",
+          "tileGrid": {
+            "maxZoom": 19
+          },
+          "srs": "EPSG:3857"
+        }
+      },
+      {
+        "id": "bing",
+        "name": "Bing",
+        "config": {
+          "id": "bing",
+          "imagerySet": "Aerial",
+          "key": "AmEV-s101vB0DGqgW8Y9rjCWBg3ZinPm_y-QM6RXHmds_mSiZDbYxeEFcugx10rr",
+          "maxZoom": 19
+        }
+      },
+      {
+        "id": "osm",
+        "name": "OpenStreetMap",
+        "config": {
+          "id": "osm"
+        }
+      }
+    ],
+    "projections": [
+      {
+        "code": "EPSG:3857",
+        "name": "Mercator"
+      },
+      {
+        "code": "EPSG:4326",
+        "name": "Geographic"
+      }
+    ],
+    "renderers": [
+      {
+        "id": "ol",
+        "name": "2D"
+      },
+      {
+        "id": "cesium",
+        "name": "3D",
+        "props": {
+          "allowFreeCameraRotation": false,
+          "sceneMode": "globe"
+        }
+      }
+    ],
+    "initialOptions": {
+      "baseLayer": "S2",
+      "projection": "EPSG:3857",
+      "renderer": "cesium"
+    },
+    "initialState": {
+      "viewport": {
+        "center": [12.5, 41.9],
+        "resolution": 6000
+      }
+    }
+  }
+}

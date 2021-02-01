@@ -1,0 +1,93 @@
+@import (css) url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+
+@import '~antd/lib/style/themes/default.less';
+@import '~antd/dist/antd.less';
+@import './theme.less';
+
+@import '~@oida/ui-react-core/styles/index.less';
+@import '~@oida/ui-react-antd/styles/index.less';
+@import '~@oida/eo-mobx-react/styles/index.less';
+@import './components/index.less';
+
+body {
+    background: white;
+    overflow: hidden;
+    margin: 0;
+
+    .map-widget {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .app-layout {
+        position: absolute;
+        z-index: 1;
+        top: 0px;
+        width: 100%;
+        height: 100vh;
+        pointer-events: none;
+        overflow: hidden;
+
+        .dataset-layer-pane {
+            pointer-events: all;
+
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        .layout-main {
+            .analysis-scrollable-overlay {
+
+                overflow: hidden;
+                margin-top: 10px;
+
+                .scrollable-overlay-content {
+
+                	min-height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+
+                    .dashboard-pane {
+                        background: transparent;
+                        overflow: visible;
+
+                        .dashboard-widget {
+                            pointer-events: all;
+
+                        }
+
+                        .react-grid-placeholder {
+                            opacity: 0.3;
+                        }
+                    }
+                }
+            }
+        }
+
+        .layout-right {
+            justify-content: space-between;
+            align-items: flex-end;
+
+            .app-toolbar {
+                pointer-events: all;
+                margin-top: 10px;
+                margin-right: 10px;
+            }
+        }
+
+        .dataset-explorer-timeline {
+            pointer-events: all;
+        }
+    }
+
+    .dataset-discovery-drawer {
+        max-width: 50%;
+        width: 500px !important;
+    }
+
+    .ant-tooltip {
+        pointer-events: none;
+    }
+
+}

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "module": "es2015",
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "target": "es5",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "preserveSymlinks": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
