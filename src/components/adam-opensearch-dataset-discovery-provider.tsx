@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { PlusOutlined } from '@ant-design/icons';
+import { message } from 'antd';
+import { PlusOutlined, AimOutlined } from '@ant-design/icons';
 
 import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
-import { useDataPaging, useEntityCollectionList, useSelector } from '@oida/ui-react-mobx';
+import { useCenterOnMapFromModule, useDataPaging, useEntityCollectionList, useMapSelection, useSelector } from '@oida/ui-react-mobx';
 import { DatasetExplorer } from '@oida/eo-mobx';
 import { DatasetDiscoveryProviderFactory } from '@oida/eo-mobx-react';
 import {
@@ -20,7 +21,23 @@ export type AdamOpensearchDatasetDiscoveryProviderProps = {
 
 export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDatasetDiscoveryProviderProps) => {
 
+
+    const centerOnMap = useCenterOnMapFromModule();
+
     const actions = [
+        {
+            name: 'Center on map',
+            content: 'Center on map',
+            icon: (<AimOutlined/>),
+            callback: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
+                centerOnMap(item.geometry, {
+                    animate: true
+                });
+            },
+            condition: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
+                return !!item.geometry;
+            }
+        },
         {
             name: 'Add to map',
             content: 'Add to map',
@@ -28,6 +45,8 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
             callback: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
                 props.provider.createDataset(item.metadata).then((datasetConfig) => {
                     props.datasetExplorer.addDataset(datasetConfig);
+                }).catch((error) => {
+                    message.error(`Unable to initialize map layer: ${error}`);
                 });
             },
             condition: (entity) => {
@@ -39,11 +58,12 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
     const loadingState = useSelector(() => props.provider.loadingState.value);
 
     const pagingProps = useDataPaging(props.provider.criteria.paging);
-
+    const mapSelection = useMapSelection();
 
     const items = useEntityCollectionList<AdamOpensearchDatasetDiscoveryProviderItem>({
         items: props.provider.results,
-        actions: actions
+        actions: actions,
+        selectionManager: mapSelection
     });
 
     if (!items) {
@@ -57,7 +77,7 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
                 content={(item) => {
                     return (
                         <DataCollectionCompactListItem
-                            title={item.metadata.extendedDatasetName}
+                            title={item.metadata.title}
                             metadata={[{
                                 label: '',
                                 value: item.metadata.description

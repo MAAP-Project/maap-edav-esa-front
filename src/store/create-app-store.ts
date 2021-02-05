@@ -78,13 +78,8 @@ export const createAppStore = (config) => {
     appState.modules.addModule(breacrumbModule);
 
     mapModule.map.layers.children.add(appState.datasetExplorer.mapLayer);
+    mapModule.map.layers.children.add(appState.datasetDiscovery.footprintLayer);
 
-
-    // appState.datasetExplorer.addDataset(datasets[0]);
-    // appState.datasetExplorer.addDataset(datasets[1]);
-    // appState.datasetExplorer.addDataset(datasets[2]);
-    // appState.datasetExplorer.addDataset(datasets[3]);
-    // appState.datasetExplorer.addDataset(datasets[4]);
     appState.datasetExplorer.setSelectedDate(new Date());
 
     return appState;

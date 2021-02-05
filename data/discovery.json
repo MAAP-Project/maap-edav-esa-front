@@ -2,7 +2,7 @@
   {
     "id": "maap",
     "name": "MAAP catalogue",
-    "opensearchUrl": "https://edav-das.dev.esa-maap.org/opensearch",
+    "opensearchUrl": "http://94.177.151.92/opensearch",
     "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs",
     "wpsUrl": "https://edav-das.dev.esa-maap.org/wps"
   },
@@ -15,11 +15,8 @@
     "datasets": [{
       "id": "biosar-1",
       "name": "Biosar 1",
-      "description": "ESA Biosar 1 campaign",
+      "description": "ESA Biosar 1 campaign data",
       "type": "raster",
-      "coverageSrs": "EPSG:32633",
-      "srsDef": "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",
-      "coverageExtent": [416922.000000, 6477286.000000, 423572.000000, 6485036.000000],
       "cswCollection": "biosar1_SLC",
       "coverages": [{
           "id": "biosar_amplitude",
@@ -130,6 +127,53 @@
           },
           "wcsResponseKey": "gfix",
           "tarFilenameRegex": "SLC_([A-Z]*)_"
+      }]
+    },{
+      "id": "globbiomass",
+      "name": "Globbiomass",
+      "description": "The data products consist of global datasets including estimates of growing stock volume (GSV, unit: m3/ha) for the year 2010 and above ground biomass (AGB, unit: tons/ha i.e., Mg/ha) for the year 2010",
+      "type": "raster",
+      "cswCollection": "GLOBBIOMASS_AGB",
+      "coverages": [{
+          "id": "agb",
+          "name": "Above ground biomass",
+          "units": "Mg · ha⁻¹",
+          "domain": {
+              "min": 0,
+              "max": 400,
+              "noData": 0
+          },
+          "wcsCoverage": "GLOBBIOMASS_AGB_4326_0000889"
+      }, {
+          "id": "agb_err",
+          "name": "Above ground biomass error",
+          "units": "Mg · ha⁻¹",
+          "domain": {
+              "min": 0,
+              "max": 200,
+              "noData": 0
+          },
+          "wcsCoverage": "GLOBBIOMASS_AGB_ERR_4326_0000889"
+      }, {
+          "id": "gsv",
+          "name": "Growing stock volume",
+          "units": "m³ · ha⁻¹",
+          "domain": {
+              "min": 0,
+              "max": 400,
+              "noData": 0
+          },
+          "wcsCoverage": "GLOBBIOMASS_GSV_4326_0000889"
+      }, {
+          "id": "gsv_err",
+          "name": "Growing stock volume error",
+          "units": "m³ · ha⁻¹",
+          "domain": {
+              "min": 0,
+              "max": 200,
+              "noData": 0
+          },
+          "wcsCoverage": "GLOBBIOMASS_GSV_ERR_4326_0000889"
       }]
     }]
   }
