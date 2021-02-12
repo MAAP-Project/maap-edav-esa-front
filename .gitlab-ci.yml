@@ -77,9 +77,8 @@ publish:
 
 
   function npm_nexus_login() {
-    npm install -g npm-cli-login
-    echo @oida:registry=$NEXUS_URL$NEXUS_NPM_REPO/ >> ~/.npmrc
-    npm-cli-login -r $NEXUS_URL$NEXUS_NPM_REPO -u $NEXUS_USER -p $NEXUS_PASSWORD -e $NEXUS_EMAIL
+    echo @oida:registry=https://$NEXUS_REPO/ > ~/.npmrc
+    echo //$NEXUS_REPO/:_authToken=$NEXUS_AUTH_TOKEN >> ~/.npmrc
   }
 
   function setup_docker() {
