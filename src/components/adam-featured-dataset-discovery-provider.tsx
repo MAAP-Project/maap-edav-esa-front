@@ -4,7 +4,7 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { STRING_FIELD_ID } from '@oida/core';
 import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
-import { useDataFiltering, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding } from '@oida/ui-react-mobx';
+import { useDataFiltering, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oida/ui-react-mobx';
 import { DatasetExplorer } from '@oida/eo-mobx';
 import { DatasetDiscoveryProviderFactory } from '@oida/eo-mobx-react';
 import {
@@ -66,10 +66,14 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
         sortingState: props.provider.criteria.sorting
     });
 
+    const mapSelection = useMapSelection();
+
     const items = useEntityCollectionList<AdamFeaturedDatasetDiscoveryProviderItem>({
         items: props.provider.results,
-        actions: actions
+        actions: actions,
+        selectionManager: mapSelection
     });
+
 
     if (!items) {
         return null;

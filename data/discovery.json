@@ -2,9 +2,16 @@
   {
     "id": "maap",
     "name": "MAAP catalogue",
-    "opensearchUrl": "http://94.177.151.92/opensearch",
+    "opensearchUrl": "https://edav-das.dev.esa-maap.org/opensearch",
     "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs",
     "wpsUrl": "https://edav-das.dev.esa-maap.org/wps"
+  },
+  {
+    "id": "maap_user",
+    "name": "User data catalogue",
+    "opensearchUrl": "https://edav-das-vap.dev.esa-maap.org/opensearch",
+    "wcsUrl": "https://edav-das-vap.dev.esa-maap.org/wcs",
+    "wpsUrl": "https://edav-das-vap.dev.esa-maap.org/wps"
   },
   {
     "id": "edav",
@@ -174,6 +181,113 @@
               "noData": 0
           },
           "wcsCoverage": "GLOBBIOMASS_GSV_ERR_4326_0000889"
+      }]
+    }, {
+        "id": "biomass_tomo_onera_lope",
+        "name": "Tomographic biomass Onera Lope",
+        "description": "Synthetic tomographic biomass product",
+        "type": "volume",
+        "cswCollection": "TOMO_GROUND_ONERA",
+        "coverages": [{
+            "id": "biomass",
+            "name": "Biomass",
+            "domain": {
+                "min": 0,
+                "max": 20,
+                "noData": 0
+            },
+            "units": "g/m²",
+            "wcsCoverage": "TOMO_GROUND_ONERA_Lope_32732_48"
+        }],
+        "dimensions": [{
+            "id": "height",
+            "name": "Height",
+            "domain": {
+                "min": -20,
+                "max": 70,
+                "step": 1
+            },
+            "units": "m",
+            "wcsSubset": {
+                "id": "h"
+            },
+            "wcsResponseKey": "high"
+        }]
+    }, {
+      "id": "biomass_tomo_onera_lope_geo",
+      "name": "Tomographic biomass Onera Lope (GEO)",
+      "type": "volume",
+      "cswCollection": "TOMO_GROUND_ONERA",
+      "coverages": [{
+          "id": "biomass",
+          "name": "Biomass",
+          "domain": {
+              "min": 0,
+              "max": 20,
+              "noData": -9999
+          },
+          "units": "g/m²",
+          "wcsCoverage": "TOMO_GROUND_ONERA_Lope_GEO_32732_5"
+      }],
+      "dimensions": [{
+          "id": "height",
+          "name": "Height",
+          "domain": {
+              "min": -20,
+              "max": 70,
+              "step": 1
+          },
+          "units": "m",
+          "wcsSubset": {
+              "id": "h"
+          },
+          "wcsResponseKey": "high"
+      }]
+    }, {
+      "id": "congo_gedi_icesat",
+      "name": "GEDI Congo derived height",
+      "type": "raster",
+      "coverages": [{
+        "id": "height",
+        "name": "Mean Height",
+        "units": "m",
+        "domain": {
+            "min": 0,
+            "max": 150,
+            "noData": -9999
+        },
+        "wcsCoverage": "GEDI_icesat",
+        "wcsSubset": {
+            "id": "band",
+            "value": "1"
+        }
+        }, {
+        "id": "height_variance",
+        "name": "Height variance",
+        "units": "m",
+        "domain": {
+            "min": 0,
+            "max": 2,
+            "noData": 0
+        },
+        "wcsCoverage": "GEDI_icesat",
+        "wcsSubset": {
+            "id": "band",
+            "value": "2"
+        }
+      }, {
+        "id": "num_shots",
+        "name": "Number of shots",
+        "domain": {
+            "min": 0,
+            "max": 100,
+            "noData": 0
+        },
+        "wcsCoverage": "GEDI_icesat",
+        "wcsSubset": {
+            "id": "band",
+            "value": "3"
+        }
       }]
     }]
   }
