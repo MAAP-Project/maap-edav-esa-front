@@ -9,10 +9,17 @@
 @import '~@oida/eo-mobx-react/styles/index.less';
 @import './components/index.less';
 
+@import '~@oida/ui-react-core/styles/utils/scrollbar';
+
 body {
     background: white;
     overflow: hidden;
     margin: 0;
+
+    & * {
+        .scrollbar(8px, @primary-color, @primary-2);
+    }
+
 
     .map-widget {
         width: 100%;
@@ -88,6 +95,13 @@ body {
 
     .ant-tooltip {
         pointer-events: none;
+    }
+
+    .settings-drawer {
+        .app-info {
+            font-size: 13px;
+            color: @primary-color;
+        }
     }
 
 }

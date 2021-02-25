@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Button, Tooltip, Drawer } from 'antd';
-import { SettingFilled, SearchOutlined } from '@ant-design/icons';
+import { SettingFilled, SearchOutlined, InfoCircleFilled } from '@ant-design/icons';
 
 import { AppSettings } from './app-settings';
 import logo from '../../assets/logo.png';
@@ -27,6 +27,7 @@ export const AppHeader = () => {
                 className='settings-drawer'
                 onClose={() => setShowSettings(false)}
                 visible={showSettings}
+                footer={<div className='app-info'><InfoCircleFilled/> Client version: {window['appVersion']}</div>}
             >
                 <AppSettings></AppSettings>
             </Drawer>

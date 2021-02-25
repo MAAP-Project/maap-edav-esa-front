@@ -70,6 +70,7 @@ const config = (env = {}) => {
                 new HtmlWebpackPlugin({
                     template: './src/index.ejs',
                     baseUrl: env.baseUrl || '/',
+                    appVersion: env.appVersion || 'dev',
                     minify: false
                 }),
                 new ForkTsCheckerWebpackPlugin()

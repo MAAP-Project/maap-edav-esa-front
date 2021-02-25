@@ -32,7 +32,7 @@ build:
       - "dist"
     expire_in: 1 hr
   script:
-    - npm run build -- --env.baseUrl='{{ getenv "BASE_URL"}}'
+    - npm run build -- --env.baseUrl='{{ getenv "BASE_URL"}}' --env.appVersion=${VERSION_TAG}
 
 lint:
   stage: test
