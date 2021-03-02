@@ -47,7 +47,8 @@ export const createAppStore = (config) => {
                         searchClient: new AdamOpensearchDatasetDiscoveryClient({
                             serviceUrl: item.opensearchUrl,
                             wcsUrl: item.wcsUrl
-                        })
+                        }),
+                        active: false
                     });
                 } else {
                     return initAdamFeaturedDatasetProvider({
@@ -59,6 +60,7 @@ export const createAppStore = (config) => {
                             wpsServiceUrl: item.wpsUrl,
                             cswServiceUrl: item.cswUrl
                         },
+                        active: false
                     });
                 }
             })
