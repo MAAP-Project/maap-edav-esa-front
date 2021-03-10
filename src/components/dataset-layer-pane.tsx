@@ -4,8 +4,11 @@ import classnames from 'classnames';
 import { Button, Tooltip } from 'antd';
 import { MenuUnfoldOutlined, LeftOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { DatasetExplorer } from '@oida/eo-mobx';
+import { DatasetExplorer, DATASET_AOI_FILTER_KEY } from '@oida/eo-mobx';
 import { DatasetExplorerMapViz } from '@oida/eo-mobx-react';
+import { useFormData } from '@oida/ui-react-mobx';
+import { AoiAction, getAoiFieldFactory } from '@oida/core';
+import { AdvancedSearchFilterer } from '@oida/ui-react-antd';
 
 export type DatasetLayerPaneProps = {
     explorerState: DatasetExplorer;
@@ -19,6 +22,20 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
 
     let content: JSX.Element;
     const title = props.title || 'Map datasets';
+
+    const aoiFieldFactory = getAoiFieldFactory();
+
+    const aoiFilterConfig = aoiFieldFactory({
+        name: DATASET_AOI_FILTER_KEY,
+        supportedActions: [AoiAction.DrawBBox, AoiAction.DrawPolygon, AoiAction.Import],
+        supportedGeometries: [{type: 'BBox'}, {type: 'Polygon'}],
+        title: 'Area of interest'
+    });
+
+    const commonFilters = useFormData({
+        fieldValues: props.explorerState.commonFilters,
+        fields: [aoiFilterConfig]
+    });
 
     if (!paneVisible) {
         content = (
@@ -49,6 +66,12 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
                         Add datasets
                     </Button>
                 </div>
+                {commonFilters &&
+                    <AdvancedSearchFilterer
+                        expandButtonTooltip='Datasets subsetting'
+                        {...commonFilters}
+                    />
+                }
                 <DatasetExplorerMapViz
                     explorerState={props.explorerState}
                 />

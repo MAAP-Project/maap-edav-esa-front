@@ -2,9 +2,9 @@ import React from 'react';
 
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
-import { STRING_FIELD_ID } from '@oida/core';
+import { IFormFieldDefinition, STRING_FIELD_ID } from '@oida/core';
 import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
-import { useDataFiltering, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oida/ui-react-mobx';
+import { useFormData, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oida/ui-react-mobx';
 import { DatasetExplorer } from '@oida/eo-mobx';
 import { DatasetDiscoveryProviderFactory } from '@oida/eo-mobx-react';
 import {
@@ -21,7 +21,7 @@ export type AdamFeaturedDatasetDiscoveryProviderProps = {
 
 export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetDiscoveryProviderProps) => {
 
-    const searchFilters = [
+    const searchFilters: IFormFieldDefinition[] = [
         {
             name: 'q',
             type: STRING_FIELD_ID,
@@ -56,9 +56,9 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
 
     const pagingProps = useDataPaging(props.provider.criteria.paging);
 
-    const filteringProps = useDataFiltering({
-        filteringState: props.provider.criteria.filters,
-        filters: searchFilters
+    const filteringProps = useFormData({
+        fieldValues: props.provider.criteria.filters,
+        fields: searchFilters
     });
 
     const sortingProps = useDataSorting({
@@ -88,10 +88,7 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
                     return (
                         <DataCollectionCompactListItem
                             title={item.dataset.name}
-                            metadata={[{
-                                label: '',
-                                value: item.dataset.description
-                            }]}
+                            description={item.dataset.description}
                         />
                     );
                 }}

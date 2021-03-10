@@ -55,7 +55,7 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
         }
     ];
 
-    const loadingState = useSelector(() => props.provider.loadingState.value);
+    const loadingState = useSelector(() => props.provider.loadingState.value, [props.provider]);
 
     const pagingProps = useDataPaging(props.provider.criteria.paging);
     const mapSelection = useMapSelection();
@@ -78,10 +78,7 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
                     return (
                         <DataCollectionCompactListItem
                             title={item.metadata.title}
-                            metadata={[{
-                                label: '',
-                                value: item.metadata.description
-                            }]}
+                            description={item.metadata.description}
                         />
                     );
                 }}

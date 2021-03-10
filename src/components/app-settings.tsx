@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { BOOLEAN_FIELD_ID, AnyFormFieldDefinition } from '@oida/core';
-import { ChoiceSelectorCombo, FormRenderer } from '@oida/ui-react-antd';
+import { BOOLEAN_FIELD_ID, IFormFieldDefinition } from '@oida/core';
+import { ChoiceSelectorCombo, DataForm } from '@oida/ui-react-antd';
 import {
     useSelector, useMapModule,
     useMapBaseLayerSelectorFromModule, useMapRendererSelectorFromModule, useMapProjectionSelectorFromModule
 } from '@oida/ui-react-mobx';
 
 
-const cesiumRendererOptions: AnyFormFieldDefinition[] = [{
+const cesiumRendererOptions: IFormFieldDefinition[] = [{
     name: 'allowFreeCameraRotation',
     type: BOOLEAN_FIELD_ID,
     title: 'Allow free rotation',
@@ -52,7 +52,7 @@ export const AppSettings = () => {
                 <div className='app-settings-control-title'>Map rendering mode:</div>
                 <ChoiceSelectorCombo {...rendererSelectorProps}/>
             </div>
-            {mapRenderer.id === 'cesium' && <FormRenderer
+            {mapRenderer.id === 'cesium' && <DataForm
                 fields={cesiumRendererOptions}
                 values={mapRenderer.props}
                 onFieldChange={onRendererPropChange}
