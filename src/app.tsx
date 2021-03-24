@@ -23,7 +23,6 @@ export const App = (props: AppProps) => {
             <MapComponent/>
             <ThreeColumnLayout
                 className='app-layout'
-                header={<AppHeader/>}
                 left={
                     <DatasetLayerPane
                         explorerState={props.appState.datasetExplorer}
@@ -31,15 +30,24 @@ export const App = (props: AppProps) => {
                     />
                 }
                 main={
-                    <ScrollableOverlay className='analysis-scrollable-overlay'>
-                        <DatasetAnalysesDashboard
-                            datasetsExplorer={props.appState.datasetExplorer}
-                            gridBreakpoints={[{
-                                width: 0,
-                                numColumns: 24
-                            }]}
-                        />
-                    </ScrollableOverlay>
+                    <React.Fragment>
+                        <AppHeader/>
+                        <ScrollableOverlay className='analysis-scrollable-overlay'>
+                            <DatasetAnalysesDashboard
+                                datasetsExplorer={props.appState.datasetExplorer}
+                                numCols={40}
+                                rowSnapHeight={10}
+                                compactType={null}
+                                preventCollision={true}
+                                defaultWidgetPosition={{
+                                    x: 20,
+                                    y: 0,
+                                    w: 20,
+                                    h: 20
+                                }}
+                            />
+                        </ScrollableOverlay>
+                    </React.Fragment>
                 }
                 bottom={
                     <React.Fragment>
