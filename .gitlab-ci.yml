@@ -69,7 +69,7 @@ publish:
 
   function npm_nexus_login() {
     echo @oida:registry=https://$NEXUS_REPO/ > ~/.npmrc
-    echo //$NEXUS_REPO/:_authToken=$NEXUS_AUTH_TOKEN >> ~/.npmrc
+    echo //$NEXUS_REPO/:_auth=$NEXUS_AUTH_TOKEN >> ~/.npmrc
   }
 
   function setup_docker() {
