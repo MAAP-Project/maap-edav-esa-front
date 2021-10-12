@@ -6,11 +6,9 @@ import { IFormFieldDefinition, STRING_FIELD_ID } from '@oida/core';
 import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
 import { useFormData, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oida/ui-react-mobx';
 import { DatasetExplorer } from '@oida/eo-mobx';
-import { DatasetDiscoveryProviderFactory } from '@oida/eo-mobx-react';
 import {
     AdamFeaturedDatasetDiscoveryProvider as AdamDatasetDiscoveryProviderState,
-    AdamFeaturedDatasetDiscoveryProviderItem,
-    ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE
+    AdamFeaturedDatasetDiscoveryProviderItem
 } from '@oida/eo-adapters-adam';
 
 
@@ -40,8 +38,8 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
             content: 'Add to map',
             icon: (<PlusOutlined/>),
             callback: (item: AdamFeaturedDatasetDiscoveryProviderItem) => {
-                props.provider.createDataset(item.dataset).then((datasetConfig) => {
-                    return props.datasetExplorer.addDataset(datasetConfig);
+                return props.provider.createDataset(item).then((datasetConfig) => {
+                    props.datasetExplorer.addDataset(datasetConfig);
                 });
             },
             condition: (entity) => {
@@ -89,6 +87,7 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
                         <DataCollectionCompactListItem
                             title={item.dataset.name}
                             description={item.dataset.description}
+                            maxDescriptionRows={4}
                         />
                     );
                 }}
@@ -105,7 +104,3 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
         </div>
     );
 };
-
-DatasetDiscoveryProviderFactory.register(ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, (config) => {
-    return <AdamFeaturedDatasetDiscoveryProvider {...config}/>;
-});

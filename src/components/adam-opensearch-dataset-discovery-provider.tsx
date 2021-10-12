@@ -6,11 +6,9 @@ import { PlusOutlined, AimOutlined } from '@ant-design/icons';
 import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
 import { useCenterOnMapFromModule, useDataPaging, useEntityCollectionList, useMapSelection, useSelector } from '@oida/ui-react-mobx';
 import { DatasetExplorer } from '@oida/eo-mobx';
-import { DatasetDiscoveryProviderFactory } from '@oida/eo-mobx-react';
 import {
     AdamOpensearchDatasetDiscoveryProvider as AdamDatasetDiscoveryProviderState,
-    AdamOpensearchDatasetDiscoveryProviderItem,
-    ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE
+    AdamOpensearchDatasetDiscoveryProviderItem
 } from '@oida/eo-adapters-adam';
 
 
@@ -19,7 +17,7 @@ export type AdamOpensearchDatasetDiscoveryProviderProps = {
     datasetExplorer: DatasetExplorer
 };
 
-export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDatasetDiscoveryProviderProps) => {
+export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchDatasetDiscoveryProviderProps) => {
 
 
     const centerOnMap = useCenterOnMapFromModule();
@@ -43,7 +41,7 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
             content: 'Add to map',
             icon: (<PlusOutlined/>),
             callback: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
-                props.provider.createDataset(item.metadata).then((datasetConfig) => {
+                return props.provider.createDataset(item).then((datasetConfig) => {
                     props.datasetExplorer.addDataset(datasetConfig);
                 }).catch((error) => {
                     message.error(`Unable to initialize map layer: ${error}`);
@@ -79,6 +77,7 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
                         <DataCollectionCompactListItem
                             title={item.metadata.title}
                             description={item.metadata.description}
+                            maxDescriptionRows={4}
                         />
                     );
                 }}
@@ -93,7 +92,3 @@ export const AdamOpensearchdDatasetDiscoveryProvider = (props: AdamOpensearchDat
         </div>
     );
 };
-
-DatasetDiscoveryProviderFactory.register(ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE, (config) => {
-    return <AdamOpensearchdDatasetDiscoveryProvider {...config}/>;
-});

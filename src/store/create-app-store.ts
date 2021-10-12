@@ -82,7 +82,7 @@ export const createAppStore = (config) => {
     mapModule.map.layers.children.add(appState.datasetExplorer.mapLayer);
     mapModule.map.layers.children.add(appState.datasetDiscovery.footprintLayer);
 
-    appState.datasetExplorer.setSelectedDate(new Date());
+    appState.datasetExplorer.setToi(new Date());
 
     return appState;
 };

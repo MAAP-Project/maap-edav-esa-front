@@ -38,7 +38,7 @@ export const App = (props: AppProps) => {
                                 numCols={40}
                                 rowSnapHeight={10}
                                 compactType={null}
-                                preventCollision={true}
+                                preventCollision={false}
                                 defaultWidgetPosition={{
                                     x: 20,
                                     y: 0,

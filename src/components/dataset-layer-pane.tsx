@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import classnames from 'classnames';
-
 import { Button, Tooltip } from 'antd';
-import { MenuUnfoldOutlined, LeftOutlined, PlusOutlined } from '@ant-design/icons';
+import { LeftOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { DatasetExplorer, DATASET_AOI_FILTER_KEY } from '@oida/eo-mobx';
+import { DatasetExplorer } from '@oida/eo-mobx';
 import { DatasetExplorerMapViz } from '@oida/eo-mobx-react';
-import { useFormData } from '@oida/ui-react-mobx';
-import { AoiAction, getAoiFieldFactory } from '@oida/core';
-import { AdvancedSearchFilterer } from '@oida/ui-react-antd';
+import { useSelector } from '@oida/ui-react-mobx';
+import { LayerGroupSolidIcon } from '@oida/ui-react-antd';
+
+import { getAnalyticsTools } from '../store';
 
 export type DatasetLayerPaneProps = {
     explorerState: DatasetExplorer;
@@ -23,25 +23,18 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
     let content: JSX.Element;
     const title = props.title || 'Map datasets';
 
-    const aoiFieldFactory = getAoiFieldFactory();
+    const explorerAoi = useSelector(() => props.explorerState.aoi);
 
-    const aoiFilterConfig = aoiFieldFactory({
-        name: DATASET_AOI_FILTER_KEY,
-        supportedActions: [AoiAction.DrawBBox, AoiAction.DrawPolygon, AoiAction.Import],
-        supportedGeometries: [{type: 'BBox'}, {type: 'Polygon'}],
-        title: 'Area of interest'
-    });
-
-    const commonFilters = useFormData({
-        fieldValues: props.explorerState.commonFilters,
-        fields: [aoiFilterConfig]
-    });
+    const analyticsTools = useMemo(() => {
+        return getAnalyticsTools(props.explorerState);
+    }, []);
 
     if (!paneVisible) {
         content = (
             <Tooltip title={title}>
                 <Button
-                    icon={<MenuUnfoldOutlined/>}
+                    size='large'
+                    icon={<LayerGroupSolidIcon/>}
                     onClick={() => setPaneVisible(true)}
                 />
             </Tooltip>
@@ -66,14 +59,9 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
                         Add datasets
                     </Button>
                 </div>
-                {commonFilters &&
-                    <AdvancedSearchFilterer
-                        expandButtonTooltip='Datasets subsetting'
-                        {...commonFilters}
-                    />
-                }
                 <DatasetExplorerMapViz
                     explorerState={props.explorerState}
+                    analyticsTools={analyticsTools}
                 />
             </React.Fragment>
         );

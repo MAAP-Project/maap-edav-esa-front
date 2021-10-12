@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ThreadsPlugin = require('threads-plugin');
 
 const cesiumConfig = require('@oida/map-cesium/config/webpack.cesium.js');
 const antdConfig = require('@oida/ui-react-antd/config/webpack.antd.js');
@@ -43,6 +44,26 @@ const config = (env = {}) => {
                         ]
                     },
                     {
+                        test: /\.jsx?$/,
+                        include:[
+                            /oida[\/\\]/,
+                            path.resolve(__dirname, "node_modules/geotiff")
+                        ],
+                        use: [
+                            {
+                                loader: 'ts-loader',
+                                options: {
+                                    transpileOnly: true,
+                                    configFile: path.resolve(__dirname, 'tsconfig.json'),
+                                    compilerOptions: {
+                                        sourceMap: false
+                                    },
+                                    onlyCompileBundledFiles: true
+                                }
+                            }
+                        ]
+                    },
+                    {
                         test: /\.(png|jpe?g|gif|svg)$/i,
                         use: [
                             {
@@ -73,7 +94,8 @@ const config = (env = {}) => {
                     appVersion: env.appVersion || 'dev',
                     minify: false
                 }),
-                new ForkTsCheckerWebpackPlugin()
+                new ForkTsCheckerWebpackPlugin(),
+                new ThreadsPlugin()
             ]
         }
     )
