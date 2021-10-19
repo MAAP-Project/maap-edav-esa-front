@@ -15,7 +15,9 @@ const config = (env = {}) => {
             port: 8449,
             hot: true,
             historyApiFallback: true,
-            disableHostCheck: true
+            disableHostCheck: true,
+            noInfo: true,
+            clientLogLevel: 'silent'
         },
         module: {
             rules: [
