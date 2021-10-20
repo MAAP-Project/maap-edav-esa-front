@@ -6,6 +6,12 @@
     "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs"
   },
   {
+    "id": "nasa",
+    "name": "Nasa Catalogue",
+    "opensearchUrl": "https://nasa-edav-das.dev.esa-maap.org/opensearch",
+    "wcsUrl": "https://nasa-edav-das.dev.esa-maap.org/wcs"
+  },
+  {
     "id": "maap_user",
     "name": "User data catalogue",
     "opensearchUrl": "https://edav-das-vap.dev.esa-maap.org/opensearch",
