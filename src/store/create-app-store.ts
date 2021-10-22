@@ -47,8 +47,10 @@ export const createAppStore = (config) => {
                         },
                         searchClient: new AdamOpensearchDatasetDiscoveryClient({
                             serviceUrl: item.opensearchUrl,
-                            wcsUrl: item.wcsUrl
+                            wcsUrl: item.wcsUrl,
+                            additionalDatasetConfig: item.additionalDatasetConfig
                         }),
+                        isStatic: item.staticCatalogue,
                         active: false
                     });
                 } else {
