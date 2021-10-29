@@ -9,6 +9,8 @@ import {
 
 import { AdamFeaturedDatasetDiscoveryProvider as AdamFeaturedDatasetDiscoveryProviderComponent } from './adam-featured-dataset-discovery-provider';
 import { AdamOpensearchDatasetDiscoveryProvider as AdamOpensearchDatasetDiscoveryProviderComponent } from './adam-opensearch-dataset-discovery-provider';
+import { FeaturedDatasetDiscoveryProviderComponent } from './featured-dataset-discovery-provider';
+import { FeaturedDatasetDiscoveryProvider, FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE } from '../store';
 
 declare module '@oida/eo-mobx-react' {
     interface DatasetDiscoveryProviderDefinitions {
@@ -17,6 +19,9 @@ declare module '@oida/eo-mobx-react' {
         };
         [ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE]: {
             provider: AdamOpensearchDatasetDiscoveryProvider
+        };
+        [FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE]: {
+            provider: FeaturedDatasetDiscoveryProvider
         };
     }
 }
@@ -37,9 +42,18 @@ DatasetDiscoveryProviderFactory.register(ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVI
     );
 });
 
+DatasetDiscoveryProviderFactory.register(FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, (config) => {
+    return (
+        <FeaturedDatasetDiscoveryProviderComponent
+            {...config}
+        />
+    );
+});
+
 export * from './dataset-layer-pane';
 export * from './dataset-timeline';
 export * from './adam-featured-dataset-discovery-provider';
 export * from './adam-opensearch-dataset-discovery-provider';
+export * from './featured-dataset-discovery-provider';
 export * from './app-header';
 export * from './map-mouse-coords';
