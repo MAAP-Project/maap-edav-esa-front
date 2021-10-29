@@ -3,35 +3,62 @@
     "id": "maap",
     "name": "MAAP catalogue",
     "opensearchUrl": "https://edav-das.dev.esa-maap.org/opensearch",
-    "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs"
+    "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs",
+    "internalWcsUrl": "http://edav-backend-mwcs:680/wcs",
+    "staticCatalogue": true,
+    "additionalDatasetConfig": {
+      "ESACCI_Biomass_L4_AGB": {
+        "aoiRequired": true
+      }
+    }
   },
   {
     "id": "nasa",
     "name": "Nasa Catalogue",
     "opensearchUrl": "https://nasa-edav-das.dev.esa-maap.org/opensearch",
-    "wcsUrl": "https://nasa-edav-das.dev.esa-maap.org/wcs"
+    "wcsUrl": "https://nasa-edav-das.dev.esa-maap.org/wcs",
+    "internalWcsUrl": "http://edav-backend-mwcsnasa:680/wcs",
+    "staticCatalogue": true
   },
   {
     "id": "maap_user",
     "name": "User data catalogue",
     "opensearchUrl": "https://edav-das-vap.dev.esa-maap.org/opensearch",
-    "wcsUrl": "https://edav-das-vap.dev.esa-maap.org/wcs"
+    "wcsUrl": "https://edav-das-vap.dev.esa-maap.org/wcs",
+    "internalWcsUrl": "http://edav-backend-mwcsvap:680/wcs"
   },
   {
     "id": "creodias",
     "name": "Creodias",
     "opensearchUrl": "https://maap-creodias.adamplatform.eu/opensearch",
-    "wcsUrl": "https://maap-creodias.adamplatform.eu/wcs"
+    "wcsUrl": "https://maap-creodias.adamplatform.eu/wcs",
+    "staticCatalogue": true
   },
   {
     "id": "edav",
-    "name": "EDAV featured",
+    "name": "External data",
     "wcsUrl": "https://edav-wcs.adamplatform.eu/wcs",
     "cswUrl": "https://edav-pycsw.adamplatform.eu/pycsw/csw.py",
     "wpsUrl": "https://edav-wps.adamplatform.eu/wps",
+    "edavServices": {
+      "wcsServiceUrl": "https://edav-wcs.adamplatform.eu/wcs",
+      "cswServiceUrl": "https://edav-pycsw.adamplatform.eu/pycsw/csw.py",
+      "wpsServiceUrl": "https://edav-wps.adamplatform.eu/wps"
+    },
+    "fosService": {
+      "url": "https://forest-observation-system.net",
+      "intendedUse": "view",
+      "applicationId": "maap"
+    },
     "datasets": [{
+        "id": "fos",
+        "name": "FOS plots",
+        "datasetType": "fos",
+        "description": "The Forest Observation System is an international cooperation to establish a global in-situ forest biomass database to support earth observation and to encourage investment in relevant field-based observations and science. The Forest Observation System provides well curated biomass plot data in a unified format, that is aggregated from tree level data consistently across different networks."
+      }, {
       "id": "biosar-1",
       "name": "Biosar 1",
+      "datasetType": "edav",
       "description": "ESA Biosar 1 campaign data",
       "type": "raster",
       "cswCollection": "biosar1_SLC",
@@ -152,6 +179,7 @@
     },{
       "id": "globbiomass",
       "name": "Globbiomass",
+      "datasetType": "edav",
       "description": "The data products consist of global datasets including estimates of growing stock volume (GSV, unit: m3/ha) for the year 2010 and above ground biomass (AGB, unit: tons/ha i.e., Mg/ha) for the year 2010",
       "type": "raster",
       "cswCollection": "GLOBBIOMASS_AGB",
@@ -199,6 +227,7 @@
     }, {
         "id": "biomass_tomo_onera_lope",
         "name": "Tomographic biomass Onera Lope",
+        "datasetType": "edav",
         "description": "Synthetic tomographic biomass product",
         "type": "volume",
         "cswCollection": "TOMO_GROUND_ONERA",
@@ -230,6 +259,7 @@
     }, {
       "id": "biomass_tomo_onera_lope_geo",
       "name": "Tomographic biomass Onera Lope (GEO)",
+      "datasetType": "edav",
       "type": "volume",
       "cswCollection": "TOMO_GROUND_ONERA",
       "coverages": [{
@@ -260,6 +290,7 @@
     }, {
       "id": "congo_gedi_icesat",
       "name": "GEDI Congo derived height",
+      "datasetType": "edav",
       "type": "raster",
       "coverages": [{
         "id": "height",

@@ -3,12 +3,14 @@ import { Route, useHistory } from 'react-router';
 
 import { ThreeColumnLayout, ScrollableOverlay } from '@oida/ui-react-core';
 import { MapComponentFromModule as MapComponent } from '@oida/ui-react-mobx';
+import { VECTOR_VIZ_TYPE } from '@oida/eo-mobx';
 import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer } from '@oida/eo-mobx-react';
 
 import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords } from './components';
 import { AppState } from './store' ;
 
 import '../style/app.less';
+
 
 export type AppProps = {
     appState: AppState;
@@ -44,6 +46,13 @@ export const App = (props: AppProps) => {
                                     y: 0,
                                     w: 20,
                                     h: 20
+                                }}
+                                preferredLayout={{
+                                    [VECTOR_VIZ_TYPE]: {
+                                        position: 'br',
+                                        width: 450,
+                                        height: 470
+                                    }
                                 }}
                             />
                         </ScrollableOverlay>

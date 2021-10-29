@@ -8,7 +8,7 @@ import { initAoiModule } from './init-aoi-module';
 import { initFormattersModule } from './init-formatters-module';
 
 import { initBreadcrumbModule } from './init-breadcrumb-module';
-import { initAdamFeaturedDatasetProvider, initAdamOpensearchDatasetProvider } from './init-adam-dataset-provider';
+import { initFeaturedDatasetsProvider, initAdamOpensearchDatasetProvider } from './init-adam-dataset-provider';
 import { WcsUrlMapper } from './wcs-url-mapper';
 
 
@@ -63,17 +63,7 @@ export const createAppStore = (config) => {
                         active: false
                     });
                 } else {
-                    return initAdamFeaturedDatasetProvider({
-                        id: item.id,
-                        name: item.name,
-                        datasets: item.datasets,
-                        factoryConfig: {
-                            wcsServiceUrl: item.wcsUrl,
-                            wpsServiceUrl: item.wpsUrl,
-                            cswServiceUrl: item.cswUrl
-                        },
-                        active: false
-                    });
+                    return initFeaturedDatasetsProvider(item);
                 }
             })
         },
