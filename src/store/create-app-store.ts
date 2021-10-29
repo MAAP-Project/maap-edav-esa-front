@@ -9,16 +9,21 @@ import { initFormattersModule } from './init-formatters-module';
 
 import { initBreadcrumbModule } from './init-breadcrumb-module';
 import { initAdamFeaturedDatasetProvider, initAdamOpensearchDatasetProvider } from './init-adam-dataset-provider';
+import { WcsUrlMapper } from './wcs-url-mapper';
 
 
 export type AppStateProps = {
     discovery: DatasetDiscoveryProps;
+    wcsUrlMapper: WcsUrlMapper;
 };
 
 export class AppState implements HasAppModules {
+
     readonly modules: AppModules;
     readonly datasetExplorer: DatasetExplorer;
     readonly datasetDiscovery: DatasetDiscovery;
+    readonly wcsUrlMapper: WcsUrlMapper;
+
     constructor(props: AppStateProps) {
         this.modules = new AppModules();
         this.datasetExplorer = new DatasetExplorer({
@@ -27,11 +32,15 @@ export class AppState implements HasAppModules {
             })
         });
         this.datasetDiscovery = new DatasetDiscovery(props.discovery);
+        this.wcsUrlMapper = props.wcsUrlMapper;
     }
 }
 
 export const createAppStore = (config) => {
 
+    const wcsUrlMapper = new WcsUrlMapper({
+        discoveryProviders: config.discovery
+    });
     const appState = new AppState({
         discovery: {
             providers: config.discovery.map((item) => {
@@ -67,7 +76,8 @@ export const createAppStore = (config) => {
                     });
                 }
             })
-        }
+        },
+        wcsUrlMapper: wcsUrlMapper
     });
 
     const mapModule = initMapModule(config.map);

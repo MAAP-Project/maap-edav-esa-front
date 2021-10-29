@@ -12,6 +12,7 @@ import { useSelector } from '@oida/ui-react-mobx';
 import { LayerGroupSolidIcon, AdvancedSearchFilterer } from '@oida/ui-react-antd';
 
 import { getAnalyticsTools } from '../store';
+import { DatasetDownloadModal } from './dataset-download';
 
 
 export type DatasetLayerPaneProps = {
@@ -106,6 +107,7 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
                 <DatasetExplorerMapViz
                     explorerState={props.explorerState}
                     analyticsTools={analyticsTools}
+                    datasetDownloadComponent={DatasetDownloadModal}
                 />
             </React.Fragment>
         );
