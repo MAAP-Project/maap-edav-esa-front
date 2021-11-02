@@ -2,9 +2,15 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
+    location /fos/ {
+        proxy_pass https://forest-observation-system.net/;
+    }
+
     location / {
         try_files   $uri$args $uri$args/ /index.html;
     }
+
+
 
     location ~ \.map$ { {{ $ips := split (getenv "SOURCE_MAP_ALLOWED_IPS" "") ";" }} {{range $ips }}
         allow {{.}};{{ end }}

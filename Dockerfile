@@ -5,7 +5,7 @@ ENV BASE_URL=/
 
 ## nginx config ##
 ENV NGINX_REAL_IPS_FROM=10.0.0.0/8;172.16.0.0/12;192.168.0.0/16
-ENV SOURCE_MAP_ALLOWED_IPS=185.125.226.2;158.234.250.71
+ENV SOURCE_MAP_ALLOWED_IPS=87.10.0.0/16
 
 COPY ./dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
