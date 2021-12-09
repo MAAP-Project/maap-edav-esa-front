@@ -5,12 +5,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import axios from 'axios';
+import { Pool } from 'geotiff';
 
 import { createAppStoreContext } from '@oida/ui-react-mobx';
-
+import { GeotiffRenderer } from '@oida/eo-geotiff';
 
 import { createAppStore } from './store' ;
 import { App } from './app';
+
 
 Promise.all([
     axios.get('data/config.json'),
@@ -29,6 +31,8 @@ Promise.all([
     };
     const appState = createAppStore(config);
     createAppStoreContext(appState);
+
+    GeotiffRenderer.setDecoder(new Pool(undefined, new Worker(new URL('geotiff/src/decoder.worker.js', import.meta.url))));
 
     render(
         (
