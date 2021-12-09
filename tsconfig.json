@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "declaration": false,
-    "module": "es2015",
+    "module": "esnext",
     "lib": ["es6", "dom"],
     "jsx": "react",
     "sourceMap": true,

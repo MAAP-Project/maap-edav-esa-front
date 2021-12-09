@@ -2,22 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const ThreadsPlugin = require('threads-plugin');
 
 const cesiumConfig = require('@oida/map-cesium/config/webpack.cesium.js');
 const antdConfig = require('@oida/ui-react-antd/config/webpack.antd.js');
 
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 
 const config = (env = {}) => {
-    return webpackMerge(
+    return merge(
         cesiumConfig({ nodeModulesDir: 'node_modules' }),
         antdConfig({
-            styleLoader: env.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
-            tsLoaderOptions: {
-                transpileOnly: true
-            }
+            styleLoader: env.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader'
         }),
         {
             entry: {
@@ -25,14 +20,34 @@ const config = (env = {}) => {
             },
             output: {
                 path: env.outpath || path.resolve(__dirname, "dist"),
-                filename: '[name].[hash].bundle.js',
+                filename: '[name].[contenthash].bundle.js',
             },
             resolve: {
                 extensions: ['.ts', '.tsx', '.js', '.jsx'],
-                symlinks: false
+                symlinks: false,
+                fallback: {
+                    util: require.resolve("util/"),
+                    buffer: require.resolve("buffer/"),
+                    https: false,
+                    http: false,
+                    fs: false
+                }
             },
+            target: 'web',
             module: {
                 rules: [
+                    {
+                        test: /\.tsx?$/,
+                        exclude: /node_modules/,
+                        use: [
+                            {
+                                loader: 'ts-loader',
+                                options: {
+                                    transpileOnly: true
+                                }
+                            }
+                        ]
+                    },
                     {
                         include: /oida[\/\\]/,
                         test: /\.jsx?$/,
@@ -69,7 +84,7 @@ const config = (env = {}) => {
                             {
                                 loader: 'file-loader',
                                 options: {
-                                    name: 'assets/images/[name].[hash].[ext]'
+                                    name: 'assets/images/[name].[contenthash].[ext]'
                                 }
                             }
                         ]
@@ -80,7 +95,7 @@ const config = (env = {}) => {
                             {
                                 loader: 'file-loader',
                                 options: {
-                                    name: 'assets/fonts/[name].[hash].[ext]'
+                                    name: 'assets/fonts/[name].[contenthash].[ext]'
                                 }
                             }
                         ]
@@ -94,8 +109,14 @@ const config = (env = {}) => {
                     appVersion: env.appVersion || 'dev',
                     minify: false
                 }),
-                new ForkTsCheckerWebpackPlugin(),
-                new ThreadsPlugin()
+                //in order for wkx to work
+                // TODO: replace wkx with a browser native lib (e.g. @terraformer/wkt)
+                new webpack.DefinePlugin({
+                    'process.env.NODE_DEBUG': false
+                }),
+                new webpack.ProvidePlugin({
+                    Buffer: ['buffer', 'Buffer'],
+                })
             ]
         }
     )

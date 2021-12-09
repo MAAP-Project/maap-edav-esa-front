@@ -1,13 +1,14 @@
 const path = require('path');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const config = (env = {}) => {
-    return webpackMerge(commonConfig({
+    return merge(commonConfig({
         mode: 'production',
         ...env
     }),{
@@ -33,6 +34,7 @@ const config = (env = {}) => {
             ]
         },
         plugins: [
+            new ForkTsCheckerWebpackPlugin(),
             new BundleAnalyzerPlugin({
                 analyzerMode: 'static',
                 reportFilename: '../bundle-report.html',
@@ -40,8 +42,8 @@ const config = (env = {}) => {
             }),
             new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
-                filename: "[name].[hash].bundle.css",
-                chunkFilename: "[id].[hash].css"
+                filename: "[name].[contenthash].bundle.css",
+                chunkFilename: "[id].[contenthash].css"
             }),
             new CopyWebpackPlugin({
                 patterns: [{
