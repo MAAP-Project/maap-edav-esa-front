@@ -1,7 +1,7 @@
 import { GroupLayer } from '@oida/state-mobx';
 import { HasAppModules, AppModules } from '@oida/ui-react-mobx';
 import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps } from '@oida/eo-mobx';
-import { AdamOpensearchDatasetDiscoveryClient } from '@oida/eo-adapters-adam';
+import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchMetadataModelVersion } from '@oida/eo-adapters-adam';
 
 import { initMapModule } from './init-map-module';
 import { initAoiModule } from './init-aoi-module';
@@ -57,7 +57,8 @@ export const createAppStore = (config) => {
                         searchClient: new AdamOpensearchDatasetDiscoveryClient({
                             serviceUrl: item.opensearchUrl,
                             wcsUrl: item.wcsUrl,
-                            additionalDatasetConfig: item.additionalDatasetConfig
+                            additionalDatasetConfig: item.additionalDatasetConfig,
+                            metadataModelVersion: item.opensearchVersion || AdamOpensearchMetadataModelVersion.V2
                         }),
                         isStatic: item.staticCatalogue,
                         active: false
