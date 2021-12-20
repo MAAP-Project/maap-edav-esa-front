@@ -1,15 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import classnames from 'classnames';
-import { autorun } from 'mobx';
 import { Button, Tooltip, Form } from 'antd';
-import { LeftOutlined, PlusOutlined, FilterOutlined } from '@ant-design/icons';
+import { LeftOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { AoiAction, AOI_FIELD_ID, getAoiFieldFactory } from '@oida/core';
-import { DataFilters } from '@oida/state-mobx';
-import { DatasetExplorer } from '@oida/eo-mobx';
-import { DatasetExplorerMapViz } from '@oida/eo-mobx-react';
-import { useSelector } from '@oida/ui-react-mobx';
-import { LayerGroupSolidIcon, AdvancedSearchFilterer } from '@oida/ui-react-antd';
+import { DatasetExplorer } from '@oidajs/eo-mobx';
+import { DatasetExplorerMapViz } from '@oidajs/eo-mobx-react';
+import { LayerGroupSolidIcon } from '@oidajs/ui-react-antd';
 
 import { getAnalyticsTools } from '../store';
 import { DatasetDownloadModal } from './dataset-download';
@@ -27,32 +23,6 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
 
     let content: JSX.Element;
     const title = props.title || 'Map datasets';
-
-    const [datasetFilters] = useState(() => new DataFilters());
-
-    useEffect(() => {
-        const filtersUpdaterDisposer = autorun(() => {
-            const aoi = props.explorerState.aoi;
-            if (aoi) {
-                datasetFilters.set('aoi', aoi, AOI_FIELD_ID);
-            } else {
-                datasetFilters.unset('aoi');
-            }
-        });
-
-        return filtersUpdaterDisposer;
-    }, [datasetFilters]);
-
-    const datasetFiltersValues = useSelector(() => {
-        const items = datasetFilters.items;
-        const values = new Map();
-        items.forEach((item) => {
-            values.set(item.key, item.value);
-        });
-        return values;
-    });
-
-    const aoiFieldFactory = getAoiFieldFactory();
 
     const analyticsTools = useMemo(() => {
         return getAnalyticsTools(props.explorerState);
@@ -88,22 +58,6 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
                         Add datasets
                     </Button>
                 </div>
-                <AdvancedSearchFilterer
-                    expandButtonTooltip='Datasets subsetting'
-                    fields={[aoiFieldFactory({
-                        name: 'aoi',
-                        supportedActions: [AoiAction.DrawBBox, AoiAction.DrawPolygon, AoiAction.Import],
-                        supportedGeometries: [{type: 'BBox'}, {type: 'Polygon'}],
-                        title: 'Area of interest'
-                    })]}
-                    onFieldChange={(name, value) => {
-                        if (name === 'aoi') {
-                            props.explorerState.setAoi(value);
-                        }
-                    }}
-                    values={datasetFiltersValues}
-                    searchIcon={<FilterOutlined/>}
-                />
                 <DatasetExplorerMapViz
                     explorerState={props.explorerState}
                     analyticsTools={analyticsTools}

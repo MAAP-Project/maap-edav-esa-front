@@ -3,7 +3,7 @@ import wkx from 'wkx';
 
 import {
     AxiosInstanceWithCancellation, createAxiosInstance
-} from '@oida/core';
+} from '@oidajs/core';
 
 export type FosApiClientConfig = {
     url: string;

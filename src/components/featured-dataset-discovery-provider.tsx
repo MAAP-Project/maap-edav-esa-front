@@ -2,10 +2,10 @@ import React from 'react';
 
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
-import { IFormFieldDefinition, STRING_FIELD_ID } from '@oida/core';
-import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
-import { useFormData, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oida/ui-react-mobx';
-import { DatasetExplorer } from '@oida/eo-mobx';
+import { IFormFieldDefinition, STRING_FIELD_ID } from '@oidajs/core';
+import { DataCollectionCompactListItem, DataCollectionList } from '@oidajs/ui-react-antd';
+import { useFormData, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oidajs/ui-react-mobx';
+import { DatasetExplorer } from '@oidajs/eo-mobx';
 import { FeaturedDatasetDiscoveryProvider, FeaturedDatasetDiscoveryProviderItem } from '../store';
 
 

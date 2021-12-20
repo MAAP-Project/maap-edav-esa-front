@@ -2,9 +2,9 @@ import {
     formatMapCoord, MapCoordQuantity,
     formatDate, DateQuantity,
     formatFilesize, FilesizeQuantity, FilesizeUnit
-} from '@oida/core';
+} from '@oidajs/core';
 
-import { FormattersModule } from '@oida/ui-react-mobx';
+import { FormattersModule } from '@oidajs/ui-react-mobx';
 
 export const initFormattersModule = () => {
     const formatters = [

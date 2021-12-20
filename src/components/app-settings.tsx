@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { BOOLEAN_FIELD_ID, IFormFieldDefinition } from '@oida/core';
-import { ChoiceSelectorCombo, DataForm } from '@oida/ui-react-antd';
+import { BOOLEAN_FIELD_ID, IFormFieldDefinition } from '@oidajs/core';
+import { ChoiceSelectorCombo, DataForm } from '@oidajs/ui-react-antd';
 import {
     useSelector, useMapModule,
     useMapBaseLayerSelectorFromModule, useMapRendererSelectorFromModule, useMapProjectionSelectorFromModule
-} from '@oida/ui-react-mobx';
+} from '@oidajs/ui-react-mobx';
 
 
 const cesiumRendererOptions: IFormFieldDefinition[] = [{

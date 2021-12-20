@@ -1,12 +1,12 @@
 import React from 'react';
 import moment from 'moment';
 
-import { getGeometryExtent, IFeatureStyle } from '@oida/core';
+import { getGeometryExtent, IFeatureStyle } from '@oidajs/core';
 import {
     DatasetConfig, DatasetVectorFeature, defaultVectoreFeatureStyleFactory,
     getVectorFeaturesFilterer, VectorFeatureDescriptor, VECTOR_VIZ_TYPE
-} from '@oida/eo-mobx';
-import { getPlottyColorScales } from '@oida/eo-geotiff';
+} from '@oidajs/eo-mobx';
+import { getPlottyColorScales } from '@oidajs/eo-geotiff';
 
 import { FeaturedDatasetConfig } from '../discovery';
 import { FosApiClient, FosApiClientConfig } from './fos-api-client';

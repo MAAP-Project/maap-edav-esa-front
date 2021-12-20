@@ -1,4 +1,4 @@
-import { AoiModule, MapModule, GeoJsonAoiParser } from '@oida/ui-react-mobx';
+import { AoiModule, MapModule, GeoJsonAoiParser } from '@oidajs/ui-react-mobx';
 
 export const initAoiModule = (mapModule: MapModule) => {
 

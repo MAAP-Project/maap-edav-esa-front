@@ -1,9 +1,9 @@
-import { MapModule } from '@oida/ui-react-mobx';
+import { MapModule } from '@oidajs/ui-react-mobx';
 
-import '@oida/map-ol';
-import '@oida/map-cesium';
-import '@oida/map-cesium-ol-tile-source';
-import { FeatureHoverInteraction, FeatureSelectInteraction } from '@oida/state-mobx';
+import '@oidajs/map-ol';
+import '@oidajs/map-cesium';
+import '@oidajs/map-cesium-ol-tile-source';
+import { FeatureHoverInteraction, FeatureSelectInteraction } from '@oidajs/state-mobx';
 
 export const initMapModule = (config) => {
 
@@ -17,7 +17,7 @@ export const initMapModule = (config) => {
                 resolution: 3000
             },
             config: {
-
+                animateOnChange: true
             }
         }
     };

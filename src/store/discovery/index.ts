@@ -1,8 +1,8 @@
-import { DatasetDiscoveryProvider } from '@oida/eo-mobx';
+import { DatasetDiscoveryProvider } from '@oidajs/eo-mobx';
 
 import { FeaturedDatasetDiscoveryProvider, FeaturedDatasetDiscoveryProviderProps, FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE } from './featured-discovery-provider';
 
-declare module '@oida/eo-mobx' {
+declare module '@oidajs/eo-mobx' {
     interface DatasetDiscoveryProviderDefinitions {
         [FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE]: FeaturedDatasetDiscoveryProviderProps;
     }

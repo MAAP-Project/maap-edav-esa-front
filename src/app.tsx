@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, useHistory } from 'react-router';
 
-import { ThreeColumnLayout, ScrollableOverlay } from '@oida/ui-react-core';
-import { MapComponentFromModule as MapComponent } from '@oida/ui-react-mobx';
-import { VECTOR_VIZ_TYPE } from '@oida/eo-mobx';
-import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer } from '@oida/eo-mobx-react';
+import { ThreeColumnLayout, ScrollableOverlay } from '@oidajs/ui-react-core';
+import { MapComponentFromModule as MapComponent } from '@oidajs/ui-react-mobx';
+import { VECTOR_VIZ_TYPE } from '@oidajs/eo-mobx';
+import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer } from '@oidajs/eo-mobx-react';
 
-import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords } from './components';
+import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords, MapTools } from './components';
 import { AppState } from './store' ;
 
 import '../style/app.less';
@@ -56,6 +56,7 @@ export const App = (props: AppProps) => {
                                 }}
                             />
                         </ScrollableOverlay>
+                        <MapTools explorerState={props.appState.datasetExplorer}/>
                     </React.Fragment>
                 }
                 bottom={

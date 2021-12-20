@@ -9,6 +9,9 @@
     "additionalDatasetConfig": {
       "ESACCI_Biomass_L4_AGB": {
         "aoiRequired": true
+      },
+      "TROPISAR_geo": {
+        "disabled": true
       }
     }
   },
@@ -31,6 +34,7 @@
     "id": "creodias",
     "name": "Creodias",
     "opensearchUrl": "https://maap-creodias.adamplatform.eu/opensearch",
+    "opensearchVersion": "v2",
     "wcsUrl": "https://maap-creodias.adamplatform.eu/wcs",
     "staticCatalogue": true
   },

@@ -1,18 +1,18 @@
 
 import React from 'react';
 
-import { DatasetDiscoveryProviderFactory } from '@oida/eo-mobx-react';
+import { DatasetDiscoveryProviderFactory } from '@oidajs/eo-mobx-react';
 import {
     ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE,
     AdamFeaturedDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProvider
- } from '@oida/eo-adapters-adam';
+ } from '@oidajs/eo-adapters-adam';
 
 import { AdamFeaturedDatasetDiscoveryProvider as AdamFeaturedDatasetDiscoveryProviderComponent } from './adam-featured-dataset-discovery-provider';
 import { AdamOpensearchDatasetDiscoveryProvider as AdamOpensearchDatasetDiscoveryProviderComponent } from './adam-opensearch-dataset-discovery-provider';
 import { FeaturedDatasetDiscoveryProviderComponent } from './featured-dataset-discovery-provider';
 import { FeaturedDatasetDiscoveryProvider, FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE } from '../store';
 
-declare module '@oida/eo-mobx-react' {
+declare module '@oidajs/eo-mobx-react' {
     interface DatasetDiscoveryProviderDefinitions {
         [ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE]: {
             provider: AdamFeaturedDatasetDiscoveryProvider
@@ -57,3 +57,4 @@ export * from './adam-opensearch-dataset-discovery-provider';
 export * from './featured-dataset-discovery-provider';
 export * from './app-header';
 export * from './map-mouse-coords';
+export * from './map-tools';

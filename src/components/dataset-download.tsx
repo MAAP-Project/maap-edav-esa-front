@@ -3,10 +3,10 @@ import { Modal, Button, message } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { CopyOutlined, DownloadOutlined } from '@ant-design/icons';
 
-import { DatasetDownloadConfig } from '@oida/eo-mobx';
-import { AdamDatasetDownloadConfig } from '@oida/eo-adapters-adam';
-import { DatasetDownloadFormSubmitState, DatasetVizDownload, DatasetVizDownloadModalProps } from '@oida/eo-mobx-react';
-import { useAppStore } from '@oida/ui-react-mobx';
+import { DatasetDownloadConfig } from '@oidajs/eo-mobx';
+import { AdamDatasetDownloadConfig } from '@oidajs/eo-adapters-adam';
+import { DatasetDownloadFormSubmitState, DatasetVizDownload, DatasetVizDownloadModalProps } from '@oidajs/eo-mobx-react';
+import { useAppStore } from '@oidajs/ui-react-mobx';
 
 import { AppState } from '../store';
 

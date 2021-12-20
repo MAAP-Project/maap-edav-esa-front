@@ -7,8 +7,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import axios from 'axios';
 import { Pool } from 'geotiff';
 
-import { createAppStoreContext } from '@oida/ui-react-mobx';
-import { GeotiffRenderer } from '@oida/eo-geotiff';
+import { createAppStoreContext } from '@oidajs/ui-react-mobx';
+import { GeotiffRenderer } from '@oidajs/eo-geotiff';
 
 import { createAppStore } from './store' ;
 import { App } from './app';

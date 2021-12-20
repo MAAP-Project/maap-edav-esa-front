@@ -3,13 +3,13 @@ import React from 'react';
 import { message } from 'antd';
 import { PlusOutlined, AimOutlined } from '@ant-design/icons';
 
-import { DataCollectionCompactListItem, DataCollectionList } from '@oida/ui-react-antd';
-import { useCenterOnMapFromModule, useDataPaging, useEntityCollectionList, useMapSelection, useSelector } from '@oida/ui-react-mobx';
-import { DatasetExplorer } from '@oida/eo-mobx';
+import { DataCollectionCompactListItem, DataCollectionList } from '@oidajs/ui-react-antd';
+import { useCenterOnMapFromModule, useDataPaging, useEntityCollectionList, useMapSelection, useSelector } from '@oidajs/ui-react-mobx';
+import { DatasetExplorer } from '@oidajs/eo-mobx';
 import {
     AdamOpensearchDatasetDiscoveryProvider as AdamDatasetDiscoveryProviderState,
     AdamOpensearchDatasetDiscoveryProviderItem
-} from '@oida/eo-adapters-adam';
+} from '@oidajs/eo-adapters-adam';
 
 
 export type AdamOpensearchDatasetDiscoveryProviderProps = {

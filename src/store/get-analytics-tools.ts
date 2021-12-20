@@ -2,8 +2,8 @@ import {
     DatasetAnalysis, DatasetAreaSeries, DatasetAreaValues, DatasetPointSeries,
     DatasetToolConfig, DatasetTransectValues, DATASET_AREA_SERIES_PROCESSING,
     DATASET_AREA_VALUES_PROCESSING, POINT_SERIES_PROCESSING, TRANSECT_VALUES_PROCESSING
-} from '@oida/eo-mobx';
-import { ComboToolConfig } from '@oida/eo-mobx-react';
+} from '@oidajs/eo-mobx';
+import { ComboToolConfig } from '@oidajs/eo-mobx-react';
 
 
 export const getAnalyticsTools = (datasetExplorer) => {
@@ -85,6 +85,10 @@ export const getAnalyticsTools = (datasetExplorer) => {
                     throw new Error('Unable to find a compatible dataset');
                 }
             } else {
+
+                const explorerItem = datasetExplorer.items.find((item) => {
+                    return item.dataset.id === dataset.id;
+                });
                 const transectValuesTool = dataset?.config.tools?.find((tool) => {
                     return tool.type === TRANSECT_VALUES_PROCESSING;
                 }) as DatasetToolConfig<typeof TRANSECT_VALUES_PROCESSING> | undefined;
@@ -93,6 +97,7 @@ export const getAnalyticsTools = (datasetExplorer) => {
                     processings: transectValuesTool ? [new DatasetTransectValues({
                         dataset: dataset!,
                         config: transectValuesTool.config,
+                        parent: explorerItem?.mapViz,
                         ...transectValuesTool.defaultParams
                     })] : undefined
                 });
@@ -131,6 +136,11 @@ export const getAnalyticsTools = (datasetExplorer) => {
                     throw new Error('Unable to find a compatible dataset');
                 }
             } else {
+
+                const explorerItem = datasetExplorer.items.find((item) => {
+                    return item.dataset.id === dataset.id;
+                });
+
                 const areaValuesTool = dataset?.config.tools?.find((tool) => {
                     return tool.type === DATASET_AREA_VALUES_PROCESSING;
                 }) as DatasetToolConfig<typeof DATASET_AREA_VALUES_PROCESSING> | undefined;
@@ -139,6 +149,7 @@ export const getAnalyticsTools = (datasetExplorer) => {
                     processings: areaValuesTool ? [new DatasetAreaValues({
                         dataset: dataset!,
                         config: areaValuesTool.config,
+                        parent: explorerItem.mapViz,
                         ...areaValuesTool.defaultParams
                     })] : undefined
                 });
@@ -177,6 +188,11 @@ export const getAnalyticsTools = (datasetExplorer) => {
                     throw new Error('Unable to find a compatible dataset');
                 }
             } else {
+
+                const explorerItem = datasetExplorer.items.find((item) => {
+                    return item.dataset.id === dataset.id;
+                });
+
                 const areaSeriesTool = dataset?.config.tools?.find((tool) => {
                     return tool.type === DATASET_AREA_SERIES_PROCESSING;
                 }) as DatasetToolConfig<typeof DATASET_AREA_SERIES_PROCESSING> | undefined;
@@ -185,6 +201,7 @@ export const getAnalyticsTools = (datasetExplorer) => {
                     processings: areaSeriesTool ? [new DatasetAreaSeries({
                         dataset: dataset!,
                         config: areaSeriesTool.config,
+                        parent: explorerItem.mapViz,
                         ...areaSeriesTool.defaultParams
                     })] : undefined
                 });

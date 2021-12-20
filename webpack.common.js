@@ -3,8 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const cesiumConfig = require('@oida/map-cesium/config/webpack.cesium.js');
-const antdConfig = require('@oida/ui-react-antd/config/webpack.antd.js');
+const cesiumConfig = require('@oidajs/map-cesium/config/webpack.cesium.js');
+const antdConfig = require('@oidajs/ui-react-antd/config/webpack.antd.js');
 
 const { merge } = require('webpack-merge');
 
@@ -49,7 +49,7 @@ const config = (env = {}) => {
                         ]
                     },
                     {
-                        include: /oida[\/\\]/,
+                        include: /oidajs[\/\\]/,
                         test: /\.jsx?$/,
                         enforce: 'pre',
                         use: [
@@ -61,7 +61,6 @@ const config = (env = {}) => {
                     {
                         test: /\.jsx?$/,
                         include:[
-                            /oida[\/\\]/,
                             path.resolve(__dirname, "node_modules/geotiff")
                         ],
                         use: [

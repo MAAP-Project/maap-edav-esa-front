@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { useSelector } from '@oida/ui-react-mobx';
-import { DatasetExplorer } from '@oida/eo-mobx';
-import { DatasetDiscoveryTimeline } from '@oida/eo-mobx-react';
+import { useSelector } from '@oidajs/ui-react-mobx';
+import { DatasetExplorer } from '@oidajs/eo-mobx';
+import { DatasetDiscoveryTimeline } from '@oidajs/eo-mobx-react';
 
 
 export type DatasetTimelineProps = {

@@ -1,8 +1,8 @@
 import { autorun } from 'mobx';
 
-import { Geometry, SortOrder } from '@oida/core';
-import { DatasetConfig, DatasetDiscoveryProvider, DatasetDiscoveryProviderProps } from '@oida/eo-mobx';
-import { Entity, QueryParams, QueryParamsProps } from '@oida/state-mobx';
+import { Geometry, SortOrder } from '@oidajs/core';
+import { DatasetConfig, DatasetDiscoveryProvider, DatasetDiscoveryProviderProps } from '@oidajs/eo-mobx';
+import { Entity, QueryParams, QueryParamsProps } from '@oidajs/state-mobx';
 
 
 export const FEATURED_DATASET_DISCOVERY_ITEM_TYPE = 'featured_discovery_item';

@@ -1,7 +1,7 @@
-import { GroupLayer } from '@oida/state-mobx';
-import { HasAppModules, AppModules } from '@oida/ui-react-mobx';
-import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps } from '@oida/eo-mobx';
-import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchMetadataModelVersion } from '@oida/eo-adapters-adam';
+import { GroupLayer } from '@oidajs/state-mobx';
+import { HasAppModules, AppModules, bindAoiValueToMap } from '@oidajs/ui-react-mobx';
+import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps } from '@oidajs/eo-mobx';
+import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchMetadataModelVersion } from '@oidajs/eo-adapters-adam';
 
 import { initMapModule } from './init-map-module';
 import { initAoiModule } from './init-aoi-module';
@@ -58,7 +58,7 @@ export const createAppStore = (config) => {
                             serviceUrl: item.opensearchUrl,
                             wcsUrl: item.wcsUrl,
                             additionalDatasetConfig: item.additionalDatasetConfig,
-                            metadataModelVersion: item.opensearchVersion || AdamOpensearchMetadataModelVersion.V2
+                            metadataModelVersion: item.opensearchVersion || AdamOpensearchMetadataModelVersion.V3
                         }),
                         isStatic: item.staticCatalogue,
                         active: false
@@ -87,6 +87,14 @@ export const createAppStore = (config) => {
     mapModule.map.layers.children.add(appState.datasetDiscovery.footprintLayer);
 
     appState.datasetExplorer.setToi(new Date());
+
+    bindAoiValueToMap({
+        aois: aoiModule.aois,
+        getter: () => appState.datasetExplorer.aoi,
+        setter: (value) => appState.datasetExplorer.setAoi(value),
+        map: mapModule.map,
+        color: '#1f8fcb'
+    });
 
     return appState;
 };

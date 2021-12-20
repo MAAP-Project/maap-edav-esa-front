@@ -1,4 +1,4 @@
-import { BreadcrumbModule } from '@oida/ui-react-mobx';
+import { BreadcrumbModule } from '@oidajs/ui-react-mobx';
 
 export const initBreadcrumbModule = () => {
 

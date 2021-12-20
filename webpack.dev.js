@@ -61,7 +61,7 @@ const config = (env = {}) => {
                             "src/**/*",
                             // this ensures that when using npm linked libraries, changes to the node_modules library types
                             // are tracked by the type checker plugin
-                            "node_modules/@oida/*/types/**/*"
+                            "node_modules/@oidajs/*/types/**/*"
                         ]
                     }
                 }

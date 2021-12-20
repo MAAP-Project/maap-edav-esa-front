@@ -2,7 +2,7 @@ import {
     AdamDatasetFactoryConfig, AdamDatasetRenderMode, AdamFeaturedDataset, AdamFeaturedDatasetDiscoveryProvider,
     AdamFeaturedDatasetDiscoveryProviderProps, AdamOpensearchDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProviderProps,
     AdamWcsCoverageDescriptionClient, getAdamDatasetFactory, isMultiBandCoverage
-} from '@oida/eo-adapters-adam';
+} from '@oidajs/eo-adapters-adam';
 import { FeatureDatasetDiscoveryProviderFactory, FeaturedDatasetConfig, FeaturedDatasetDiscoveryProvider } from './discovery';
 import { FosApiClientConfig, getFosDatasetFactory } from './fos';
 
