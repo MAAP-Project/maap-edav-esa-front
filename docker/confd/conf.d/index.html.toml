@@ -1,3 +1,0 @@
-[template]
-src = "index.html.tmpl"
-dest = "/usr/share/nginx/html/index.html"

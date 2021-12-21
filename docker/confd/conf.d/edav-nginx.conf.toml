@@ -1,3 +1,0 @@
-[template]
-src = "edav-nginx.conf.tmpl"
-dest = "/etc/nginx/conf.d/edav.conf"

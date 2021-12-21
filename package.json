@@ -6,13 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "lint": "tslint --project ./tsconfig.json",
-    "oida:link": "npm link @oidajs/core @oidajs/map-ol @oidajs/map-cesium @oidajs/map-cesium-ol-tile-source @oidajs/state-mobx @oidajs/ui-react-core @oidajs/ui-react-mobx @oidajs/ui-react-antd @oidajs/eo-mobx @oidajs/eo-mobx-react @oidajs/eo-geotiff @oidajs/eo-adapters-adam",
-    "oida:update:branch": "cross-env-shell npm install @oidajs/core@$BRANCH @oidajs/map-ol@$BRANCH @oidajs/map-cesium@$BRANCH @oidajs/map-cesium-ol-tile-source@$BRANCH @oidajs/state-mobx@$BRANCH @oidajs/ui-react-core@$BRANCH @oidajs/ui-react-mobx@$BRANCH @oidajs/ui-react-antd@$BRANCH @oidajs/eo-mobx@$BRANCH @oidajs/eo-mobx-react@$BRANCH @oidajs/eo-geotiff@$BRANCH @oidajs/eo-adapters-adam@$BRANCH",
-    "oida:update:master": "cross-env-shell BRANCH=master npm run oida:update:branch",
-    "oida:update:release": "cross-env-shell BRANCH=latest npm run oida:update:branch",
-    "oida:update:public": "npm install --@oidajs:registry=https://registry.npmjs.org/ @oidajs/core@latest @oidajs/map-ol@latest @oidajs/map-cesium@latest @oidajs/map-cesium-ol-tile-source@latest @oidajs/state-mobx@latest @oidajs/ui-react-core@latest @oidajs/ui-react-mobx@latest @oidajs/ui-react-antd@latest @oidajs/eo-mobx@latest @oidajs/eo-mobx-react@latest @oidajs/eo-geotiff@latest @oidajs/eo-adapters-adam@latest",
-    "start": "cross-env TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling NODE_PRESERVE_SYMLINKS=1 webpack-dev-server --config webpack.dev.js --mode development --progress",
-    "test": "jest --config jest.config.js"
+    "start": "cross-env TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling NODE_PRESERVE_SYMLINKS=1 webpack-dev-server --config webpack.dev.js --mode development --progress"
   },
   "author": "stefano marra",
   "license": "MIT",
