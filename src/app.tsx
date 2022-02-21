@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, useHistory } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { ThreeColumnLayout, ScrollableOverlay } from '@oidajs/ui-react-core';
 import { MapComponentFromModule as MapComponent } from '@oidajs/ui-react-mobx';
@@ -18,7 +18,7 @@ export type AppProps = {
 
 export const App = (props: AppProps) => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <React.Fragment>
@@ -28,7 +28,7 @@ export const App = (props: AppProps) => {
                 left={
                     <DatasetLayerPane
                         explorerState={props.appState.datasetExplorer}
-                        onAddLayerClick={() => history.push('/discovery', {updateLocationFromState: true})}
+                        onAddLayerClick={() => navigate('/discovery')}
                     />
                 }
                 main={
@@ -68,19 +68,22 @@ export const App = (props: AppProps) => {
                     </React.Fragment>
                 }
             />
-            <Route path='/discovery'>
-                <React.Fragment>
-                    <DatasetDiscoveryDrawer
-                        datasetDiscovery={props.appState.datasetDiscovery}
-                        datasetExplorer={props.appState.datasetExplorer}
-                        width={500}
-                        zIndex={100}
-                        onClose={() => {
-                            history.push(`/`);
-                        }}
-                    />
-                </React.Fragment>
-            </Route>
+            <Routes>
+                <Route
+                    path='/discovery/*'
+                    element={
+                        <DatasetDiscoveryDrawer
+                            datasetDiscovery={props.appState.datasetDiscovery}
+                            datasetExplorer={props.appState.datasetExplorer}
+                            width={500}
+                            zIndex={100}
+                            onClose={() => {
+                                navigate(`/`);
+                            }}
+                        />
+                    }
+                />
+            </Routes>
         </React.Fragment>
     );
 };
