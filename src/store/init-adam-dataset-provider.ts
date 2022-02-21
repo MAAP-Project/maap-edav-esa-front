@@ -44,12 +44,14 @@ export const initFeaturedDatasetsProvider = (config: {
                     const coverage = coverages[0];
                     return edavFactory({
                         ...config,
-                        coverageExtent: coverage.extent,
-                        coverageSrs: coverage.srs,
-                        srsDef: coverage.srsDef,
+                        coverageExtent: {
+                            bbox: coverage.extent,
+                            srs: coverage.srs,
+                            srsDef: coverage.srsDef
+                        },
                         renderMode: AdamDatasetRenderMode.ClientSide,
                         color: config.color,
-                        timeless: coverage.time.start.getTime() === coverage.time.end.getTime() ? true : undefined
+                        fixedTime: coverage.time.start.getTime() === coverage.time.end.getTime() ? new Date(coverage.time.start) : undefined
                     });
                 }
             });

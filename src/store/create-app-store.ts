@@ -52,7 +52,8 @@ export const createAppStore = (config) => {
                             wcsServiceUrl: item.wcsUrl,
                             wpsServiceUrl: item.wpsUrl,
                             cswServiceUrl: item.cswUrl,
-                            opensearchUrl: item.opensearchUrl
+                            opensearchUrl: item.opensearchUrl,
+                            opensearchMetadataModelVersion: item.opensearchVersion
                         },
                         searchClient: new AdamOpensearchDatasetDiscoveryClient({
                             serviceUrl: item.opensearchUrl,
