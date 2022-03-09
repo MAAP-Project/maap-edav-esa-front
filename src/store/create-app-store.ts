@@ -1,6 +1,7 @@
+import { Color, IFeatureStyle } from '@oidajs/core';
 import { GroupLayer } from '@oidajs/state-mobx';
 import { HasAppModules, AppModules, bindAoiValueToMap } from '@oidajs/ui-react-mobx';
-import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps } from '@oidajs/eo-mobx';
+import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps, defaultDiscoveryFootprintStyle } from '@oidajs/eo-mobx';
 import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchMetadataModelVersion } from '@oidajs/eo-adapters-adam';
 
 import { initMapModule } from './init-map-module';
@@ -67,7 +68,23 @@ export const createAppStore = (config) => {
                 } else {
                     return initFeaturedDatasetsProvider(item);
                 }
-            })
+            }),
+            footprintStyle: (item) => {
+                const style = defaultDiscoveryFootprintStyle(item) as IFeatureStyle;
+                if (style.polygon) {
+                    const strokeColor = style.polygon.strokeColor;
+                    if (strokeColor) {
+                        const fillColor: Color = [strokeColor[0], strokeColor[1], strokeColor[2], 0.01];
+                        if (item.hovered.value || item.selected.value) {
+                            fillColor[3] = 0.2;
+                        }
+
+                        style.polygon.fillColor = fillColor;
+                    }
+                }
+                return style;
+            }
+
         },
         wcsUrlMapper: wcsUrlMapper
     });

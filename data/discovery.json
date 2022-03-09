@@ -1,23 +1,24 @@
 [
   {
     "id": "maap",
-    "name": "MAAP catalogue",
+    "name": "MAAP",
     "opensearchUrl": "https://edav-das.dev.esa-maap.org/opensearch",
     "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs",
     "internalWcsUrl": "http://edav-backend-mwcs:680/wcs",
     "staticCatalogue": true,
     "additionalDatasetConfig": {
       "ESACCI_Biomass_L4_AGB": {
-        "aoiRequired": true
+        "aoiRequired": true,
+        "fixedTime": true
       },
       "TROPISAR_geo": {
-        "disabled": true
+        "disabled": false
       }
     }
   },
   {
     "id": "nasa",
-    "name": "Nasa Catalogue",
+    "name": "Nasa",
     "opensearchUrl": "https://nasa-edav-das.dev.esa-maap.org/opensearch",
     "wcsUrl": "https://nasa-edav-das.dev.esa-maap.org/wcs",
     "internalWcsUrl": "http://edav-backend-mwcsnasa:680/wcs",
@@ -25,10 +26,17 @@
   },
   {
     "id": "maap_user",
-    "name": "User data catalogue",
+    "name": "User data",
     "opensearchUrl": "https://edav-das-vap.dev.esa-maap.org/opensearch",
     "wcsUrl": "https://edav-das-vap.dev.esa-maap.org/wcs",
     "internalWcsUrl": "http://edav-backend-mwcsvap:680/wcs"
+  },
+  {
+    "id": "alos",
+    "name": "ESA PDGS",
+    "opensearchUrl": "https://dev.datacube.pdgs.eo.esa.int/os",
+    "wcsUrl": "https://dev.datacube.pdgs.eo.esa.int/maap/wcs",
+    "staticCatalogue": true
   },
   {
     "id": "creodias",

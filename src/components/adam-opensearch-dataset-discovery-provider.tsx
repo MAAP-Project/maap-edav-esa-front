@@ -4,7 +4,7 @@ import { message } from 'antd';
 import { PlusOutlined, AimOutlined } from '@ant-design/icons';
 
 import { DataCollectionCompactListItem, DataCollectionList } from '@oidajs/ui-react-antd';
-import { useCenterOnMapFromModule, useDataPaging, useEntityCollectionList, useMapSelection, useSelector } from '@oidajs/ui-react-mobx';
+import { useCenterOnMapFromModule, useDataPaging, useDataSorting, useEntityCollectionList, useMapSelection, useSelector } from '@oidajs/ui-react-mobx';
 import { DatasetExplorer } from '@oidajs/eo-mobx';
 import {
     AdamOpensearchDatasetDiscoveryProvider as AdamDatasetDiscoveryProviderState,
@@ -14,7 +14,8 @@ import {
 
 export type AdamOpensearchDatasetDiscoveryProviderProps = {
     provider: AdamDatasetDiscoveryProviderState;
-    datasetExplorer: DatasetExplorer
+    datasetExplorer: DatasetExplorer;
+    onDatasetAdd?: () => void;
 };
 
 export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchDatasetDiscoveryProviderProps) => {
@@ -43,6 +44,9 @@ export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchData
             callback: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
                 return props.provider.createDataset(item).then((datasetConfig) => {
                     props.datasetExplorer.addDataset(datasetConfig);
+                    if (props.onDatasetAdd) {
+                        props.onDatasetAdd();
+                    }
                 }).catch((error) => {
                     message.error(`Unable to initialize map layer: ${error}`);
                 });
@@ -56,6 +60,14 @@ export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchData
     const loadingState = useSelector(() => props.provider.loadingState.value, [props.provider]);
 
     const pagingProps = useDataPaging(props.provider.criteria.paging);
+    const sortingProps = useDataSorting({
+        sortingState: props.provider.criteria.sorting,
+        sortableFields: [{
+            key: 'title',
+            name: 'Name'
+        }]
+    });
+
     const mapSelection = useMapSelection();
 
     const items = useEntityCollectionList<AdamOpensearchDatasetDiscoveryProviderItem>({
@@ -87,6 +99,7 @@ export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchData
                 }}
                 itemLayout='vertical'
                 paging={pagingProps}
+                sorting={sortingProps}
                 autoScrollOnSelection={true}
             />
         </div>

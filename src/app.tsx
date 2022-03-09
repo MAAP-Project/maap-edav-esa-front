@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThreeColumnLayout, ScrollableOverlay } from '@oidajs/ui-react-core';
 import { MapComponentFromModule as MapComponent } from '@oidajs/ui-react-mobx';
 import { VECTOR_VIZ_TYPE } from '@oidajs/eo-mobx';
-import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer } from '@oidajs/eo-mobx-react';
+import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer, DatasetDiscoveryProviderComboSelector } from '@oidajs/eo-mobx-react';
 
 import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords, MapTools } from './components';
 import { AppState } from './store' ;
@@ -80,6 +80,8 @@ export const App = (props: AppProps) => {
                             onClose={() => {
                                 navigate(`/`);
                             }}
+                            closeOnSelection={true}
+                            providerSelector={(props) => <DatasetDiscoveryProviderComboSelector label='Catalogue' {...props}/>}
                         />
                     }
                 />
