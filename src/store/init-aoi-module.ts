@@ -1,4 +1,4 @@
-import { AoiModule, MapModule, GeoJsonAoiParser } from '@oidajs/ui-react-mobx';
+import { AoiModule, MapModule, GeoJsonAoiParser, defaultAoiStyleGetter } from '@oidajs/ui-react-mobx';
 
 export const initAoiModule = (mapModule: MapModule) => {
 
@@ -10,7 +10,15 @@ export const initAoiModule = (mapModule: MapModule) => {
                 name: 'GeoJSON',
                 supportedFileTypes: ['json', 'geojson'],
                 parser: GeoJsonAoiParser
-            }]
+            }],
+        },
+        aoiStyleGetter: (aoi) => {
+            const style = defaultAoiStyleGetter(aoi);
+            if (style.polygon) {
+                style.polygon.fillColor = [0, 0, 0, 0.01];
+                style.polygon.visible = aoi.visible.value || aoi.hovered.value;
+            }
+            return style;
         }
     });
 

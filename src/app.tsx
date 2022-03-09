@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, useHistory } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { ThreeColumnLayout, ScrollableOverlay } from '@oidajs/ui-react-core';
 import { MapComponentFromModule as MapComponent } from '@oidajs/ui-react-mobx';
 import { VECTOR_VIZ_TYPE } from '@oidajs/eo-mobx';
-import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer } from '@oidajs/eo-mobx-react';
+import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer, DatasetDiscoveryProviderComboSelector } from '@oidajs/eo-mobx-react';
 
 import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords, MapTools } from './components';
 import { AppState } from './store' ;
@@ -18,7 +18,7 @@ export type AppProps = {
 
 export const App = (props: AppProps) => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <React.Fragment>
@@ -28,7 +28,7 @@ export const App = (props: AppProps) => {
                 left={
                     <DatasetLayerPane
                         explorerState={props.appState.datasetExplorer}
-                        onAddLayerClick={() => history.push('/discovery', {updateLocationFromState: true})}
+                        onAddLayerClick={() => navigate('/discovery')}
                     />
                 }
                 main={
@@ -68,19 +68,24 @@ export const App = (props: AppProps) => {
                     </React.Fragment>
                 }
             />
-            <Route path='/discovery'>
-                <React.Fragment>
-                    <DatasetDiscoveryDrawer
-                        datasetDiscovery={props.appState.datasetDiscovery}
-                        datasetExplorer={props.appState.datasetExplorer}
-                        width={500}
-                        zIndex={100}
-                        onClose={() => {
-                            history.push(`/`);
-                        }}
-                    />
-                </React.Fragment>
-            </Route>
+            <Routes>
+                <Route
+                    path='/discovery/*'
+                    element={
+                        <DatasetDiscoveryDrawer
+                            datasetDiscovery={props.appState.datasetDiscovery}
+                            datasetExplorer={props.appState.datasetExplorer}
+                            width={500}
+                            zIndex={100}
+                            onClose={() => {
+                                navigate(`/`);
+                            }}
+                            closeOnSelection={true}
+                            providerSelector={(props) => <DatasetDiscoveryProviderComboSelector label='Catalogue' {...props}/>}
+                        />
+                    }
+                />
+            </Routes>
         </React.Fragment>
     );
 };

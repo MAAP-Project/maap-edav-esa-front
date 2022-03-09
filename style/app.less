@@ -43,7 +43,6 @@ body {
         }
 
         .map-tools {
-            pointer-events: all;
             position: absolute;
             top: 60px;
             right: 15px;
@@ -52,12 +51,17 @@ body {
             align-items: flex-end;
 
             .aoi-draw-tool {
+                pointer-events: all;
                 margin-bottom: 10px;
                 flex-direction: row-reverse;
 
                 .aoi-draw-tool-current {
                     padding-left: 10px;
                 }
+            }
+
+            .map-nav-tools {
+                pointer-events: all;
             }
         }
 

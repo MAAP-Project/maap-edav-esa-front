@@ -55,7 +55,7 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
                         icon={<PlusOutlined/>}
                         onClick={() => props.onAddLayerClick()}
                     >
-                        Add datasets
+                        Add dataset
                     </Button>
                 </div>
                 <DatasetExplorerMapViz

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Button, Tooltip, Drawer } from 'antd';
 import { SettingFilled, SearchOutlined, InfoCircleFilled } from '@ant-design/icons';
 
@@ -10,14 +10,14 @@ import logo from '../../assets/logo.png';
 export const AppHeader = () => {
 
     const [showSettings, setShowSettings] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <div className='app-header'>
             <div className='app-logo'><img src={logo}></img></div>
             <div className='app-header-tools'>
                 <Tooltip title='Data discovery'>
-                    <Button icon={<SearchOutlined/>} onClick={() => history.push('/discovery')}/>
+                    <Button icon={<SearchOutlined/>} onClick={() => navigate('/discovery')}/>
                 </Tooltip>
                 <Button icon={<SettingFilled/>} onClick={() => setShowSettings(true)}/>
             </div>
