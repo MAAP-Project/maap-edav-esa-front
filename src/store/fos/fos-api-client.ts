@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import wkx from 'wkx';
+import { wktToGeoJSON } from '@terraformer/wkt';
 
 import {
     AxiosInstanceWithCancellation, createAxiosInstance
@@ -50,10 +50,10 @@ export class FosApiClient {
                         const geometries: GeoJSON.Geometry[] = [];
 
                         if (Geometry) {
-                            geometries.push(wkx.Geometry.parse(Geometry).toGeoJSON() as GeoJSON.Geometry);
+                            geometries.push(wktToGeoJSON(Geometry) as GeoJSON.Geometry);
                         }
                         if (Geometry_Corner) {
-                            geometries.push(wkx.Geometry.parse(Geometry_Corner).toGeoJSON() as GeoJSON.Geometry);
+                            geometries.push(wktToGeoJSON(Geometry_Corner) as GeoJSON.Geometry);
                         }
                         if (!geometries.length) {
                             return;

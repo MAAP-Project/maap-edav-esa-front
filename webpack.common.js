@@ -26,11 +26,7 @@ const config = (env = {}) => {
                 extensions: ['.ts', '.tsx', '.js', '.jsx'],
                 symlinks: false,
                 fallback: {
-                    util: require.resolve("util/"),
-                    buffer: require.resolve("buffer/"),
-                    https: false,
-                    http: false,
-                    fs: false
+                    util: require.resolve("util/")
                 }
             },
             target: 'web',
@@ -107,14 +103,6 @@ const config = (env = {}) => {
                     baseUrl: env.baseUrl || '/',
                     appVersion: env.appVersion || 'dev',
                     minify: false
-                }),
-                //in order for wkx to work
-                // TODO: replace wkx with a browser native lib (e.g. @terraformer/wkt)
-                new webpack.DefinePlugin({
-                    'process.env.NODE_DEBUG': false
-                }),
-                new webpack.ProvidePlugin({
-                    Buffer: ['buffer', 'Buffer'],
                 })
             ]
         }
