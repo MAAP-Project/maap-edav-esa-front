@@ -11,7 +11,8 @@ import { FeaturedDatasetDiscoveryProvider, FeaturedDatasetDiscoveryProviderItem 
 
 export type FeaturedDatasetDiscoveryProviderComponentProps = {
     provider: FeaturedDatasetDiscoveryProvider;
-    datasetExplorer: DatasetExplorer
+    datasetExplorer: DatasetExplorer;
+    onDatasetAdd?: () => void;
 };
 
 export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDatasetDiscoveryProviderComponentProps) => {
@@ -37,6 +38,9 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
             callback: (item: FeaturedDatasetDiscoveryProviderItem) => {
                 return props.provider.createDataset(item).then((datasetConfig) => {
                     props.datasetExplorer.addDataset(datasetConfig);
+                    if (props.onDatasetAdd) {
+                        props.onDatasetAdd();
+                    }
                 });
             },
             condition: (entity) => {
