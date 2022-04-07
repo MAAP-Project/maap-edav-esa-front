@@ -270,7 +270,11 @@ export const getFosDatasetFactory = (config: FosApiClientConfig) => {
                 name: 'Count'
             }],
             formatter: (value) => {
-                return `${value.Genus} ${value.Species}: ${value.Percentage}% (${value.Count})`;
+                if (!value) {
+                    return 'N/A';
+                } else {
+                    return `${value.Genus} ${value.Species}: ${value.Percentage}% (${value.Count})`;
+                }
             }
         }, {
             type: 'string',

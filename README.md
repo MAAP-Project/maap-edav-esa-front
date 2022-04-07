@@ -4,7 +4,7 @@ Source code for the ESA Multi-Mission Algorithm and Analysis Platform (MAAP) Enh
 The application is avaiable here: https://liferay.val.esa-maap.org/web/guest/explore
 
 ## Building
-This project requires a [Node version 12.16.3 or later](https://nodejs.org/en/download/) for build
+This project requires a [Node version 16.13.1 or later](https://nodejs.org/en/download/) for build
 
 First install the project dependencies by running
 

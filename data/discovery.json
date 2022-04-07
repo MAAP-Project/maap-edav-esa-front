@@ -22,7 +22,13 @@
     "opensearchUrl": "https://nasa-edav-das.dev.esa-maap.org/opensearch",
     "wcsUrl": "https://nasa-edav-das.dev.esa-maap.org/wcs",
     "internalWcsUrl": "http://edav-backend-mwcsnasa:680/wcs",
-    "staticCatalogue": true
+    "staticCatalogue": true,
+    "additionalDatasetConfig": {
+      "GEDI02_A": {
+        "type": "vector",
+        "fixedTime": false
+      }
+    }
   },
   {
     "id": "maap_user",
@@ -345,6 +351,23 @@
             "id": "band",
             "value": "3"
         }
+      }]
+    }, {
+      "id": "AE_OPER_ALD_U_N_2B",
+      "name": "ADM-Aeolus L2B",
+      "datasetType": "edav",
+      "type": "vertical_profile",
+      "cswCollection": "AE_OPER_ALD_U_N_2B",
+      "coverages": [{
+          "id": "wind_speed",
+          "name": "Wind speed",
+          "domain": {
+              "min": -10000,
+              "max": 10000,
+              "noData": -9999
+          },
+          "units": "m/s",
+          "wcsCoverage": "AE_OPER_ALD_U_N_2B"
       }]
     }]
   }
