@@ -67,9 +67,11 @@
       "renderer": "cesium"
     },
     "initialState": {
-      "viewport": {
-        "center": [12.5, 41.9],
-        "resolution": 6000
+      "view": {
+        "viewport": {
+          "center": [12.5, 41.9],
+          "resolution": 6000
+        }
       }
     }
   }

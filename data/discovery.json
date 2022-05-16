@@ -51,8 +51,7 @@
   {
     "id": "creodias",
     "name": "Creodias",
-    "opensearchUrl": "https://maap-creodias.adamplatform.eu/opensearch",
-    "opensearchVersion": "v2",
+    "opensearchUrl": "https://maap-creodias.adamplatform.eu/opensearch/v1",
     "wcsUrl": "https://maap-creodias.adamplatform.eu/wcs",
     "staticCatalogue": true
   },
@@ -357,46 +356,15 @@
         }
       }]
     }, {
-      "id": "AE_OPER_ALD_U_N_2B",
-      "name": "ADM-Aeolus L2B",
-      "datasetType": "edav",
-      "type": "vertical_profile",
-      "cswCollection": "AE_OPER_ALD_U_N_2B",
-      "coverages": [{
-          "id": "wind_speed",
-          "name": "Wind speed",
-          "domain": {
-              "min": -10000,
-              "max": 10000,
-              "noData": -9999
-          },
-          "units": "m/s",
-          "wcsCoverage": "AE_OPER_ALD_U_N_2B"
-      }]
-    }, {
-      "id": "earthcare_atlid",
-      "name": "EarthCare ATLID",
-      "datasetType": "edav",
-      "type": "vertical_profile",
-      "cswCollection": "ECA_EXAA_ATL_ICE_2A_ice_effective_radius",
-      "coverages": [{
-          "id": "ice_radius",
-          "name": "Ice effective radius",
-          "domain": {
-              "min": 0,
-              "max": 40,
-              "noData": 0
-          },
-          "wcsCoverage": "ECA_EXAA_ATL_ICE_2A_ice_effective_radius_0_1"
-      }]
-    }, {
       "id": "gedi_rh",
       "name": "GEDI L2A RH",
       "datasetType": "edav",
       "type": "vertical_profile",
       "coverages": [{
-          "id": "value",
-          "name": "Value",
+          "id": "rh",
+          "name": "Relative height",
+          "description": "Relative height metrics at 1 % interval",
+          "units": "m",
           "domain": {
               "min": -10,
               "max": 70,
@@ -424,24 +392,25 @@
               "label": "1"
           }, {
               "value": "10",
-              "label": "2"
+              "label": "10"
           }, {
               "value": "11",
-              "label": "3"
+              "label": "11"
           }, {
               "value": "101",
-              "label": "5"
+              "label": "101"
           }, {
               "value": "110",
-              "label": "6"
+              "label": "110"
           }, {
               "value": "1000",
-              "label": "8"
+              "label": "1000"
           }, {
               "value": "1011",
-              "label": "11"
+              "label": "1011"
           }]
         },
+        "allowRange": true,
         "wcsSubset": {
             "id": "gfix",
             "idx": 0
@@ -453,6 +422,173 @@
         "step": 0.05,
         "default": 0.5
       }
+    }, {
+      "id": "gedi_l4a",
+      "name": "GEDI L4B",
+      "datasetType": "edav",
+      "type": "raster",
+      "coverages": [{
+        "id": "mu",
+        "name": "Mean aboveground biomass (MU)",
+        "units": "Mg · ha⁻¹",
+        "description": "Mean aboveground biomass density: Estimated mean AGBD for the 1 km grid cell, including forest and non-forest",
+        "domain": {
+            "min": 0,
+            "max": 600,
+            "noData": -9999
+        },
+        "wcsCoverage": "GEDI04_B_MU_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 350
+          },
+          "colorScale": "viridis"
+        }
+      }, {
+        "id": "V1",
+        "name": "Variance component 1 (V!)",
+        "description": "Uncertainty in the estimate of mean biomass due to the field-to-GEDI model used in L4A",
+        "domain": {
+            "min": 0,
+            "max": 1000,
+            "noData": -9999
+        },
+        "wcsCoverage": "GEDI04_B_V1_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 100
+          },
+          "colorScale": "turbo"
+        }
+      }, {
+        "id": "V2",
+        "name": "Variance component 2 (V2)",
+        "description": "If Mode of Inference = 1, this is the uncertainty due to GEDI's sampling of the 1 km cell. If Mode of Inference = 2, this is uncertainty owing to the model predicting biomass using wall-to-wall data, calibrated with the L4A footprint product",
+        "domain": {
+            "min": 0,
+            "max": 10000,
+            "noData": -9999
+        },
+        "wcsCoverage": "GEDI04_B_V2_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 1000
+          },
+          "colorScale": "turbo"
+        }
+      }, {
+        "id": "SE",
+        "name": "Mean AGBD standard error (SE)",
+        "description": "Mean aboveground biomass density standard error: Standard Error of the mean estimate, combining sampling and modeling uncertainty",
+        "units": "Mg · ha⁻¹",
+        "domain": {
+            "min": 0,
+            "max": 500,
+            "noData": -9999
+        },
+        "wcsCoverage": "GEDI04_B_SE_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 200
+          },
+          "colorScale": "turbo"
+        }
+      }, {
+        "id": "PE",
+        "name": "Mean AGB standard error % (PE)",
+        "description": "Standard error as a fraction of the estimated mean AGBD (PE). If >100%, the cell values are truncated to 100.",
+        "units": "%",
+        "domain": {
+            "min": 0,
+            "max": 100,
+            "noData": 255
+        },
+        "wcsCoverage": "GEDI04_B_PE_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 100
+          },
+          "colorScale": "turbo"
+        }
+      }, {
+        "id": "NC",
+        "name": "Number of clusters (NC)",
+        "description": "Number of unique GEDI ground tracks with at least one high-quality waveform intersecting the grid cell",
+        "domain": {
+            "min": 0,
+            "max": 100
+        },
+        "wcsCoverage": "GEDI04_B_NC_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 20
+          },
+          "colorScale": "turbo"
+        }
+      }, {
+        "id": "NS",
+        "name": "Number of samples (NS)",
+        "description": "Total number of high-quality waveforms across all ground tracks within the grid cell",
+        "domain": {
+            "min": 0,
+            "max": 1000
+        },
+        "wcsCoverage": "GEDI04_B_NS_4326_001",
+        "default": {
+          "range": {
+            "min": 0,
+            "max": 200
+          },
+          "colorScale": "turbo"
+        }
+      }, {
+        "id": "QF",
+        "name": "Quality flag (QF)",
+        "description": "0=Outside the GEDI domain, 1=Land surface, 2=Land surface and meets GEDI mission L1 requirement (Percent standard error <20% or Standard Error < 20 Mg ha-1)",
+        "domain": {
+            "min": 0,
+            "max": 2,
+            "step": 1
+        },
+        "wcsCoverage": "GEDI04_B_QF_4326_001",
+        "default": {
+          "colorScale": "jet"
+        }
+      }, {
+        "id": "PS",
+        "name": "Prediction stratum (PS)",
+        "description": "Determined by plant functional type and continent. PS is associated with an L4A model parameter covariance matrix that contributes to the Model Error Variance.",
+        "domain": {
+            "min": 0,
+            "max": 35,
+            "noData": 241,
+            "step": 1
+        },
+        "wcsCoverage": "GEDI04_B_PS_4326_001",
+        "default": {
+          "colorScale": "jet",
+          "clamp": false
+        }
+      }, {
+        "id": "MI",
+        "name": "Mode of interference (MI)",
+        "description": "Method used for a particular cell. Until mission completion, only those cells where hybrid inference is possible will be populated with a mean biomass value. 0=None applied, 1=Hybrid Model-Based, 2=Generalized Hierarchical Model-Based",
+        "domain": {
+            "min": 0,
+            "max": 2,
+            "step": 1
+        },
+        "default": {
+          "colorScale": "jet"
+        },
+        "wcsCoverage": "GEDI04_B_MI_4326_001"
+      }]
     }]
   }
 ]
