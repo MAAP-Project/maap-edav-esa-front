@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { ThreeColumnLayout, ScrollableOverlay } from '@oidajs/ui-react-core';
 import { MapComponentFromModule as MapComponent } from '@oidajs/ui-react-mobx';
-import { VECTOR_VIZ_TYPE } from '@oidajs/eo-mobx';
+import { VECTOR_VIZ_TYPE, VERTICAL_PROFILE_VIZ_TYPE } from '@oidajs/eo-mobx';
 import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer, DatasetDiscoveryProviderComboSelector } from '@oidajs/eo-mobx-react';
 
 import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords, MapTools } from './components';
@@ -52,6 +52,11 @@ export const App = (props: AppProps) => {
                                         position: 'br',
                                         width: 450,
                                         height: 470
+                                    },
+                                    [VERTICAL_PROFILE_VIZ_TYPE]: {
+                                        position: 'br',
+                                        width: 1000,
+                                        height: 350
                                     }
                                 }}
                             />

@@ -1,6 +1,6 @@
 {
   "name": "@cgi-italy/maap",
-  "version": "0.5.4",
+  "version": "0.7.2",
   "description": "MAAP client",
   "main": "src/index.tsx",
   "scripts": {
@@ -16,7 +16,6 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "@types/webpack-env": "^1.16.3",
-    "buffer": "^6.0.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.1.0",
     "cross-env": "^7.0.2",
@@ -44,18 +43,18 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@oidajs/core": "^4.1.0",
-    "@oidajs/eo-adapters-adam": "^2.1.0",
-    "@oidajs/eo-geotiff": "^2.0.2",
-    "@oidajs/eo-mobx": "^2.1.0",
-    "@oidajs/eo-mobx-react": "^3.1.0",
-    "@oidajs/map-cesium": "^3.1.0",
-    "@oidajs/map-cesium-ol-tile-source": "^2.0.2",
-    "@oidajs/map-ol": "^3.1.0",
-    "@oidajs/state-mobx": "^2.0.2",
-    "@oidajs/ui-react-antd": "^6.1.0",
-    "@oidajs/ui-react-core": "^6.1.0",
-    "@oidajs/ui-react-mobx": "^4.1.0",
+    "@oidajs/core": "^4.2.0",
+    "@oidajs/eo-adapters-adam": "^2.3.0",
+    "@oidajs/eo-geotiff": "^2.0.4",
+    "@oidajs/eo-mobx": "^2.3.0",
+    "@oidajs/eo-mobx-react": "^3.3.0",
+    "@oidajs/map-cesium": "^3.1.2",
+    "@oidajs/map-cesium-ol-tile-source": "^2.0.4",
+    "@oidajs/map-ol": "^3.1.1",
+    "@oidajs/state-mobx": "^2.0.3",
+    "@oidajs/ui-react-antd": "^6.1.1",
+    "@oidajs/ui-react-core": "^6.1.1",
+    "@oidajs/ui-react-mobx": "^4.1.1",
     "antd": "^4.17.2",
     "cesium": "^1.88.0",
     "classnames": "^2.2.6",
@@ -72,7 +71,6 @@
     "react-dom": "^17.0.2",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
-    "shpjs": "^3.4.3",
-    "wkx": "^0.5.0"
+    "shpjs": "^3.4.3"
   }
 }

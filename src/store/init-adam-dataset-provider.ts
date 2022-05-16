@@ -42,6 +42,13 @@ export const initFeaturedDatasetsProvider = (config: {
                     throw new Error('Invalid dataset');
                 } else {
                     const coverage = coverages[0];
+                    let fixedTime: Date | undefined;
+
+                    if (config.fixedTime) {
+                        fixedTime = new Date(config.fixedTime);
+                    } else if (coverage.time.start.getTime() === coverage.time.end.getTime()) {
+                        fixedTime = new Date(coverage.time.start);
+                    }
                     return edavFactory({
                         ...config,
                         coverageExtent: {
@@ -51,7 +58,7 @@ export const initFeaturedDatasetsProvider = (config: {
                         },
                         renderMode: AdamDatasetRenderMode.ClientSide,
                         color: config.color,
-                        fixedTime: coverage.time.start.getTime() === coverage.time.end.getTime() ? new Date(coverage.time.start) : undefined
+                        fixedTime: fixedTime
                     });
                 }
             });

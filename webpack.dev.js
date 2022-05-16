@@ -27,12 +27,9 @@ const config = (env = {}) => {
             }
         },
         snapshot: {
-            // without this, changes to npm linked libraries are not tracked
-            // TODO: update this to exclude only @oida and @poieo from node_modules once
-            // regex support (https://github.com/webpack/webpack/pull/14509) is available
-            // check also https://github.com/webpack/webpack/issues/11612 and https://github.com/webpack/webpack/issues/12810
-            managedPaths: [
-            ]
+            // by default webpack does not track changes to node_modules directory
+            // when working with linked oida libraries we want to track changes to them
+            managedPaths: [/node_modules\/(!oidajs)/]
         },
         module: {
             rules: [
