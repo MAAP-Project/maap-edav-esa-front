@@ -32,7 +32,7 @@ Promise.all([
     const appState = createAppStore(config);
     createAppStoreContext(appState);
 
-    GeotiffRenderer.setDecoder(new Pool(undefined, new Worker(new URL('geotiff/src/decoder.worker.js', import.meta.url))));
+    GeotiffRenderer.setDecoder(new Pool());
 
     render(
         (

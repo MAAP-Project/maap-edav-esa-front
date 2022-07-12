@@ -7,12 +7,19 @@ import {
     getVectorFeaturesFilterer, VectorFeatureDescriptor, VECTOR_VIZ_TYPE
 } from '@oidajs/eo-mobx';
 import { getPlottyColorScales } from '@oidajs/eo-geotiff';
+import { AdamOpenSearchClient, getAdamVectorDownloadConfig } from '@oidajs/eo-adapters-adam';
 
 import { FeaturedDatasetConfig } from '../discovery';
 import { FosApiClient, FosApiClientConfig } from './fos-api-client';
 
+export type FosDatasetFactoryConfig = FosApiClientConfig & {
+    dasAccess: {
+        opensearchUrl: string;
+        datasetId: string;
+    }
+};
 
-export const getFosDatasetFactory = (config: FosApiClientConfig) => {
+export const getFosDatasetFactory = (config: FosDatasetFactoryConfig) => {
 
     const fosClient = new FosApiClient(config);
 
@@ -288,6 +295,10 @@ export const getFosDatasetFactory = (config: FosApiClientConfig) => {
         }]
     };
 
+    const adamOpensearchClient = new AdamOpenSearchClient({
+        serviceUrl: config.dasAccess.opensearchUrl
+    });
+
     const datasetFactory = (fosDataset: FeaturedDatasetConfig) => {
 
 
@@ -376,7 +387,12 @@ export const getFosDatasetFactory = (config: FosApiClientConfig) => {
                     featureDescriptor: fosPlotFeature,
                     colorScales: getPlottyColorScales()
                 }
-            }
+            },
+            download: getAdamVectorDownloadConfig({
+                opensearchClient: adamOpensearchClient,
+                datasetId: config.dasAccess.datasetId,
+                fixedTime: true
+            })
         };
 
         return Promise.resolve(datasetConfig);

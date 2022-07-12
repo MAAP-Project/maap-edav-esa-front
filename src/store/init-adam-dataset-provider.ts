@@ -4,7 +4,7 @@ import {
     AdamWcsCoverageDescriptionClient, getAdamDatasetFactory, isMultiBandCoverage
 } from '@oidajs/eo-adapters-adam';
 import { FeatureDatasetDiscoveryProviderFactory, FeaturedDatasetConfig, FeaturedDatasetDiscoveryProvider } from './discovery';
-import { FosApiClientConfig, getFosDatasetFactory } from './fos';
+import { FosDatasetFactoryConfig, getFosDatasetFactory } from './fos';
 
 export const initAdamFeaturedDatasetProvider = (config: Omit<AdamFeaturedDatasetDiscoveryProviderProps, 'providerType'>) => {
     return new AdamFeaturedDatasetDiscoveryProvider(config);
@@ -20,7 +20,7 @@ export const initFeaturedDatasetsProvider = (config: {
     name: string,
     edavServices: AdamDatasetFactoryConfig,
     datasets: FeaturedDatasetType[],
-    fosService: FosApiClientConfig
+    fosService: FosDatasetFactoryConfig
 }) => {
 
     const coverageDescriptionClient = new AdamWcsCoverageDescriptionClient({
