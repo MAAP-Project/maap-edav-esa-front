@@ -27,7 +27,17 @@ export const initMapModule = (config) => {
     const mapModule = new MapModule({
         map: {
             ...defaultInitialState,
-            ...initialState
+            ...initialState,
+            view: {
+                viewport: {
+                    ...defaultInitialState.view.viewport,
+                    ...initialState.view.viewport
+                },
+                config: {
+                    ...defaultInitialState.view.config,
+                    ...initialState.view.config
+                }
+            }
         },
         config: {
              baseLayers: baseLayers,

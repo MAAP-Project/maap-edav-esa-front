@@ -60,13 +60,16 @@ export const DatasetDownloadModal = (props: DatasetVizDownloadModalProps) => {
                                         datasetViz: props.datasetViz,
                                         ...values
                                     }).then((request) => {
-                                        let requestUrl = appState.wcsUrlMapper.mapToInternalUrl(request.url);
+                                        let clipboardText = appState.wcsUrlMapper.mapToInternalUrl(request.url);
                                         if (request.postData) {
-                                            navigator.clipboard.writeText(`POST ${requestUrl}\n${request.postData}`);
-                                        } else {
-                                            navigator.clipboard.writeText(requestUrl);
+                                            clipboardText = `POST ${request.url}\n${request.postData}`;
                                         }
-                                        message.info('Download request copied to clipboard');
+
+                                        navigator.clipboard.writeText(clipboardText).then(() => {
+                                            message.info('Download request copied to clipboard');
+                                        }).catch((error) => {
+                                            message.error(`Unable to copy request to clipboard: ${error}`);
+                                        });
                                     });
                                 });
                             }}

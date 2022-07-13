@@ -11,8 +11,8 @@
         "aoiRequired": true,
         "fixedTime": true
       },
-      "TROPISAR_geo": {
-        "disabled": false
+      "FOS": {
+        "disabled": true
       }
     }
   },
@@ -53,7 +53,12 @@
     "name": "Creodias",
     "opensearchUrl": "https://maap-creodias.adamplatform.eu/opensearch/v1",
     "wcsUrl": "https://maap-creodias.adamplatform.eu/wcs",
-    "staticCatalogue": true
+    "staticCatalogue": true,
+    "additionalDatasetConfig": {
+      "FOS": {
+        "disabled": true
+      }
+    }
   },
   {
     "id": "edav",
@@ -69,7 +74,11 @@
     "fosService": {
       "url": "https://forest-observation-system.net",
       "intendedUse": "view",
-      "applicationId": "maap"
+      "applicationId": "maap",
+      "dasAccess": {
+        "opensearchUrl": "https://edav-das.dev.esa-maap.org/opensearch",
+        "datasetId": "FOS"
+      }
     },
     "datasets": [{
         "id": "fos",
