@@ -10,7 +10,7 @@ import { getPlottyColorScales } from '@oidajs/eo-geotiff';
 import { AdamOpenSearchClient, getAdamVectorDownloadConfig } from '@oidajs/eo-adapters-adam';
 
 import { FeaturedDatasetConfig } from '../discovery';
-import { FosApiClient, FosApiClientConfig } from './fos-api-client';
+import { FosApiClient, FosApiClientConfig, FosPlot } from './fos-api-client';
 
 export type FosDatasetFactoryConfig = FosApiClientConfig & {
     dasAccess: {
@@ -302,9 +302,63 @@ export const getFosDatasetFactory = (config: FosDatasetFactoryConfig) => {
     const datasetFactory = (fosDataset: FeaturedDatasetConfig) => {
 
 
+        const maxRequestDepth = 4;
+        const maxBBoxSize = 90;
+
+        const splitBBox = (bbox, gridWidth = 2, gridHeight = 2) => {
+
+            const bboxWidth = bbox[2] - bbox[0];
+            const bboxHeight = bbox[3] - bbox[1];
+
+            const requestWidth = bboxWidth / gridWidth;
+            const requestHeight = bboxHeight / gridHeight;
+
+            const outputBBoxes: number[][] = [];
+            for (let i = 0; i < gridWidth; ++i) {
+                for (let j = 0; j < gridHeight; ++j) {
+                    const bottomLeft = [bbox[0] + i * requestWidth, bbox[1] + j * requestHeight];
+
+                    outputBBoxes.push([
+                        bottomLeft[0],
+                        bottomLeft[1],
+                        bottomLeft[0] + requestWidth,
+                        bottomLeft[1] + requestHeight
+                    ]);
+                }
+            }
+
+            return outputBBoxes;
+        };
+
+        const getDataForBbox = (bbox: number[], gridWidth: number, gridHeight: number, requestDepth: number): Promise<FosPlot[]> => {
+
+            const plots: FosPlot[] = [];
+            if (requestDepth > maxRequestDepth) {
+                return Promise.resolve(plots);
+            }
+
+            const requestBBoxes = splitBBox(bbox, gridWidth, gridHeight);
+
+            // FOS apis returns a 500 errors when there are too many features in the request bbox
+            // When this happens we split the requests in four subregions recursevely (up to a maximum depth)
+            const requests = requestBBoxes.map((bbox) => {
+                return fosClient.getPlotData(bbox).catch(() => {
+                    return getDataForBbox(bbox, 2, 2, requestDepth + 1);
+                });
+            });
+
+            return Promise.all(requests).then((responses) => {
+                responses.forEach((response) => {
+                    plots.push(...response);
+                });
+
+                return plots;
+            });
+        };
+
         let cachedData: {
             bbox: number[],
-            data: any[]
+            data: FosPlot[]
         } = {
             bbox: [0, 0, 0, 0],
             data: []
@@ -320,60 +374,27 @@ export const getFosDatasetFactory = (config: FosDatasetFactoryConfig) => {
                 config: {
                     dataProvider: (vectorViz) => {
                         const aoi = vectorViz.dataset.aoi?.geometry;
-                        const bbox = aoi ? getGeometryExtent(aoi) : undefined;
-                        if (!bbox) {
+                        const bbox = aoi ? getGeometryExtent(aoi) || [-180, -90, 180, 90] : [-180, -90, 180, 90];
 
-
-                            const filters = vectorViz.propertyFilters.asArray();
-                            if (cachedData.bbox.length === 0) {
-                                return Promise.resolve(featureFilterer(cachedData.data, filters));
-                            } else {
-                                const gridSize = [4, 2];
-                                const bboxes: number[][] = [];
-                                const bw = 360 / gridSize[0];
-                                const bh = 180 / gridSize[1];
-
-                                for (let i = 0; i < gridSize[0]; ++i) {
-                                    for (let j = 0; j < gridSize[1]; ++j) {
-                                        const bl = [-180 + bw * i, -90 + bh * j];
-                                        bboxes.push([bl[0], bl[1], bl[0] + bw, bl[1] + bh]);
-                                    }
-                                }
-                                return Promise.all(bboxes.map((bbox) => {
-                                    return fosClient.getPlotData(bbox).catch(() => {
-                                        const bw = (bbox[2] - bbox[0]) / 2;
-                                        const bh = (bbox[3] - bbox[1]) / 2;
-                                        return Promise.all([
-                                            fosClient.getPlotData([bbox[0], bbox[1], bbox[0] + bw, bbox[1] + bh]),
-                                            fosClient.getPlotData([bbox[0] + bw, bbox[1], bbox[0] + 2 * bw, bbox[1] + bh]),
-                                            fosClient.getPlotData([bbox[0], bbox[1] + bh, bbox[0], bbox[1] + 2 * bh]),
-                                            fosClient.getPlotData([bbox[0] + bw, bbox[1] + bh, bbox[0] + 2 * bw, bbox[1] + 2 * bh])
-                                        ]).then((data) => {
-                                            return ([] as any).concat(...data);
-                                        });
-                                    });
-                                })).then((data) => {
-                                    cachedData = {
-                                        bbox: [],
-                                        data: ([] as any).concat(...data)
-                                    };
-
-                                    return featureFilterer(cachedData.data, filters);
-                                });
-                            }
+                        const filters = vectorViz.propertyFilters.asArray();
+                        if (bbox.every((item, idx) => item === cachedData.bbox[idx])) {
+                            return Promise.resolve(featureFilterer(cachedData.data, filters));
                         } else {
-                            const filters = vectorViz.propertyFilters.asArray();
-                            if (bbox.every((item, idx) => item === cachedData.bbox[idx])) {
-                                return Promise.resolve(featureFilterer(cachedData.data, filters));
-                            } else {
-                                return fosClient.getPlotData(bbox).then((data) => {
-                                    cachedData = {
-                                        bbox: bbox,
-                                        data: data
-                                    };
-                                    return featureFilterer(data, filters);
-                                });
-                            }
+
+                            const bboxWidth = bbox[2] - bbox[0];
+                            const bboxHeight = bbox[3] - bbox[1];
+
+                            const gridWidth = Math.ceil(bboxWidth / maxBBoxSize);
+                            const gridHeight = Math.ceil(bboxHeight / maxBBoxSize);
+
+                            return getDataForBbox(bbox, gridWidth, gridHeight, 0).then((plots) => {
+                                cachedData = {
+                                    bbox: bbox,
+                                    data: plots
+                                };
+
+                                return featureFilterer(plots, filters);
+                            });
                         }
                     },
                     featureStyleFactory: (color?: string) => {

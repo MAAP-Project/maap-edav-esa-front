@@ -5,6 +5,12 @@ import {
     AxiosInstanceWithCancellation, createAxiosInstance
 } from '@oidajs/core';
 
+export type FosPlot = {
+    id: string;
+    geometry: GeoJSON.GeometryCollection,
+    properties: Record<string, any>
+};
+
 export type FosApiClientConfig = {
     url: string;
     applicationId: string;
@@ -27,7 +33,7 @@ export class FosApiClient {
             url: `${this.config_.url}/DownloadBBox_extern/${bbox.join(',')}/${this.config_.intendedUse}/${this.config_.applicationId}`
         }).then((response) => {
 
-            let plots: any[] = [];
+            let plots: FosPlot[] = [];
             response.data.features.forEach((feature) => {
 
                 const props = feature.properties;
