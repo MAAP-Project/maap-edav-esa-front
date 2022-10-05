@@ -13,7 +13,7 @@ export const AppHeader = () => {
     const navigate = useNavigate();
 
     return (
-        <div className='app-header'>
+        <div className='app-top-bar'>
             <div className='app-logo'><img src={logo}></img></div>
             <div className='app-header-tools'>
                 <Tooltip title='Data discovery'>
