@@ -44,8 +44,8 @@
   {
     "id": "alos",
     "name": "ESA PDGS",
-    "opensearchUrl": "https://dev.datacube.pdgs.eo.esa.int/os",
-    "wcsUrl": "https://dev.datacube.pdgs.eo.esa.int/maap/wcs",
+    "opensearchUrl": "https://edav-ui.dev.esa-maap.org/esa-pdgs/os",
+    "wcsUrl": "https://edav-ui.dev.esa-maap.org/esa-pdgs/maap/wcs",
     "staticCatalogue": true
   },
   {
