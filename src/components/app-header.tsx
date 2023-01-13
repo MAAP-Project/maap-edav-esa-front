@@ -27,7 +27,7 @@ export const AppHeader = () => {
                 closable={false}
                 className='settings-drawer'
                 onClose={() => setShowSettings(false)}
-                visible={showSettings}
+                open={showSettings}
                 footer={<div className='app-info'><InfoCircleFilled/> Client version: {window['appVersion']}</div>}
             >
                 <AppSettings></AppSettings>

@@ -26,6 +26,10 @@ const config = (env = {}) => {
                 extensions: ['.ts', '.tsx', '.js', '.jsx'],
                 symlinks: false,
                 fallback: {
+                    http: false,
+                    https: false,
+                    zlib: false,
+                    url: false,
                     util: require.resolve("util/")
                 }
             },
@@ -57,7 +61,8 @@ const config = (env = {}) => {
                     {
                         test: /\.jsx?$/,
                         include:[
-                            path.resolve(__dirname, "node_modules/geotiff")
+                            path.resolve(__dirname, "node_modules/geotiff"),
+                            path.resolve(__dirname, "node_modules/ol")
                         ],
                         use: [
                             {
