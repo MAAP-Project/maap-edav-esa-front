@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -32,17 +32,17 @@ Promise.all([
     const appState = createAppStore(config);
     createAppStoreContext(appState);
 
-    GeotiffRenderer.setDecoder(new Pool());
+    GeotiffRenderer.setDecoder(new Pool(2));
 
-    render(
-        (
+    const appContainer = document.getElementById('app_container');
+    if (appContainer) {
+        const root = createRoot(appContainer);
+        root.render(
             <Router basename={baseHref}>
                 <DndProvider backend={HTML5Backend}>
                     <App appState={appState}/>
                 </DndProvider>
             </Router>
-        ),
-        document.getElementById('app_container')
-    );
-
+        );
+    }
 });

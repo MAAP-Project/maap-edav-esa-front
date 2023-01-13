@@ -38,7 +38,7 @@ export const DatasetDownloadModal = (props: DatasetVizDownloadModalProps) => {
     return (
         <Modal
             title={`${props.datasetViz.dataset.config!.name} download`}
-            visible={visible}
+            open={visible}
             afterClose={props.onClose}
             destroyOnClose={true}
             onCancel={() => setVisible(false)}

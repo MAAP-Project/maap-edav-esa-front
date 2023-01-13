@@ -4,7 +4,7 @@
       {
         "id": "S2",
         "name": "Sentinel-2",
-        "config": {
+        "source": {
           "id": "wmts",
           "url": "https://{s}.s2maps-tiles.eu/wmts/1.0.0/{Layer}/{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
           "subdomains": ["a", "b", "c", "d", "e"],
@@ -22,7 +22,7 @@
       {
         "id": "bing",
         "name": "Bing",
-        "config": {
+        "source": {
           "id": "bing",
           "imagerySet": "Aerial",
           "key": "AmEV-s101vB0DGqgW8Y9rjCWBg3ZinPm_y-QM6RXHmds_mSiZDbYxeEFcugx10rr",
@@ -32,7 +32,7 @@
       {
         "id": "osm",
         "name": "OpenStreetMap",
-        "config": {
+        "source": {
           "id": "osm"
         }
       }

@@ -35,6 +35,11 @@ extends Entity {
     }
 }
 
+export type FeaturedDatasetDiscoveryJsonSchema = {
+    id: string;
+    datasetId: string;
+};
+
 export const FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE = 'featured_dataset_discovery_provider';
 
 export type FeatureDatasetDiscoveryProviderFactory
@@ -50,7 +55,7 @@ export type FeaturedDatasetDiscoveryProviderProps
 
 export class FeaturedDatasetDiscoveryProvider
 <T extends FeaturedDatasetConfig = FeaturedDatasetConfig>
-extends DatasetDiscoveryProvider<FeaturedDatasetDiscoveryProviderItem<T>> {
+extends DatasetDiscoveryProvider<FeaturedDatasetDiscoveryProviderItem<T>, FeaturedDatasetDiscoveryJsonSchema> {
 
     readonly criteria: QueryParams;
     protected datasetFactory_: FeatureDatasetDiscoveryProviderFactory<T>;
@@ -72,8 +77,30 @@ extends DatasetDiscoveryProvider<FeaturedDatasetDiscoveryProviderItem<T>> {
         this.afterInit_();
     }
 
-    createDataset(item: FeaturedDatasetDiscoveryProviderItem<T>) {
-        return this.datasetFactory_(item.metadata);
+    createDataset(item: FeaturedDatasetDiscoveryProviderItem<T>, id?: string) {
+        return this.datasetFactory_(item.metadata).then((config) => {
+            if (id) {
+                config.id = id;
+            }
+            return {
+                ...config,
+                factoryInit: {
+                    factoryType: this.getFactoryId_(),
+                    initConfig: {
+                        id: config.id,
+                        datasetId: item.id
+                    }
+                }
+            };
+        });
+    }
+
+    createDatasetFromConfig(config: FeaturedDatasetDiscoveryJsonSchema) {
+        const dataset = this.datasets_.find((dataset) => dataset.id === config.datasetId);
+        if (!dataset) {
+            throw new Error(`No dataset with id ${config.datasetId} found`);
+        }
+        return this.createDataset(dataset);
     }
 
     protected afterInit_() {
