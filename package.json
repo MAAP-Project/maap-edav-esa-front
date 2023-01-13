@@ -1,6 +1,6 @@
 {
   "name": "@cgi-italy/maap",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "MAAP client",
   "main": "src/index.tsx",
   "scripts": {
