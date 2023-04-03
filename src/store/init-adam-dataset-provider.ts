@@ -1,6 +1,8 @@
 import {
     AdamDatasetFactoryConfig, AdamDatasetRenderMode, AdamFeaturedDataset, AdamFeaturedDatasetDiscoveryProvider,
     AdamFeaturedDatasetDiscoveryProviderProps, AdamOpensearchDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProviderProps,
+    AdamOpensearchDatasetDiscoveryProviderPropsV2,
+    AdamOpensearchDatasetDiscoveryProviderV2,
     AdamWcsCoverageDescriptionClient, getAdamDatasetFactory, isMultiBandCoverage
 } from '@oidajs/eo-adapters-adam';
 import { FeatureDatasetDiscoveryProviderFactory, FeaturedDatasetConfig, FeaturedDatasetDiscoveryProvider } from './discovery';
@@ -12,6 +14,10 @@ export const initAdamFeaturedDatasetProvider = (config: Omit<AdamFeaturedDataset
 
 export const initAdamOpensearchDatasetProvider = (config: Omit<AdamOpensearchDatasetDiscoveryProviderProps, 'providerType'>) => {
     return new AdamOpensearchDatasetDiscoveryProvider(config);
+};
+
+export const initAdamOpensearchDatasetProviderV2 = (config: Omit<AdamOpensearchDatasetDiscoveryProviderPropsV2, 'providerType'>) => {
+    return new AdamOpensearchDatasetDiscoveryProviderV2(config);
 };
 
 export type FeaturedDatasetType = (AdamFeaturedDataset & {datasetType: 'edav'}) | (FeaturedDatasetConfig & {datasetType: 'fos'});

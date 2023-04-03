@@ -2,19 +2,7 @@
   {
     "id": "maap",
     "name": "MAAP",
-    "opensearchUrl": "https://edav-das.dev.esa-maap.org/opensearch",
-    "wcsUrl": "https://edav-das.dev.esa-maap.org/wcs",
-    "internalWcsUrl": "http://edav-backend-mwcs:680/wcs",
-    "staticCatalogue": true,
-    "additionalDatasetConfig": {
-      "ESACCI_Biomass_L4_AGB": {
-        "aoiRequired": true,
-        "fixedTime": true
-      },
-      "FOS": {
-        "disabled": true
-      }
-    }
+    "opensearchUrlV2": "https://edav-das.dev.esa-maap.org/v1/opensearch"
   },
   {
     "id": "nasa",
@@ -51,12 +39,37 @@
   {
     "id": "creodias",
     "name": "Creodias",
-    "opensearchUrl": "https://maap-creodias.adamplatform.eu/opensearch/v1",
-    "wcsUrl": "https://maap-creodias.adamplatform.eu/wcs",
-    "staticCatalogue": true,
+    "opensearchUrlV2": "https://maap-creodias.adamplatform.eu/v1/opensearch",
     "additionalDatasetConfig": {
-      "FOS": {
-        "disabled": true
+      "SENTINEL-1": {
+        "checked": true,
+        "subdatasets": [{
+          "id": "SENTINEL-1_IW_GRDH_1S-COG_VH",
+          "domain": {
+            "min": 0,
+            "max": 65535
+          },
+          "default": {
+            "colorScale": "greys",
+            "range": {
+              "min": 0,
+              "max": 1000
+            }
+          }
+        }, {
+          "id": "SENTINEL-1_IW_GRDH_1S-COG_VV",
+          "domain": {
+            "min": 0,
+            "max": 65535
+          },
+          "default": {
+            "colorScale": "greys",
+            "range": {
+              "min": 0,
+              "max": 1000
+            }
+          }
+        }]
       }
     }
   },
