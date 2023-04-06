@@ -2,14 +2,14 @@ import { Color, IFeatureStyle } from '@oidajs/core';
 import { GroupLayer } from '@oidajs/state-mobx';
 import { HasAppModules, AppModules, bindAoiValueToMap } from '@oidajs/ui-react-mobx';
 import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps, defaultDiscoveryFootprintStyle } from '@oidajs/eo-mobx';
-import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchMetadataModelVersion } from '@oidajs/eo-adapters-adam';
+import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchDatasetDiscoveryClientV2, AdamOpensearchMetadataModelVersion } from '@oidajs/eo-adapters-adam';
 
 import { initMapModule } from './init-map-module';
 import { initAoiModule } from './init-aoi-module';
 import { initFormattersModule } from './init-formatters-module';
 
 import { initBreadcrumbModule } from './init-breadcrumb-module';
-import { initFeaturedDatasetsProvider, initAdamOpensearchDatasetProvider } from './init-adam-dataset-provider';
+import { initFeaturedDatasetsProvider, initAdamOpensearchDatasetProvider, initAdamOpensearchDatasetProviderV2 } from './init-adam-dataset-provider';
 import { WcsUrlMapper } from './wcs-url-mapper';
 
 
@@ -63,6 +63,16 @@ export const createAppStore = (config) => {
                             metadataModelVersion: item.opensearchVersion || AdamOpensearchMetadataModelVersion.V3
                         }),
                         isStatic: item.staticCatalogue,
+                        active: false
+                    });
+                } else if (item.opensearchUrlV2) {
+                    return initAdamOpensearchDatasetProviderV2({
+                        id: item.id,
+                        name: item.name,
+                        searchClient: new AdamOpensearchDatasetDiscoveryClientV2({
+                            serviceUrl: item.opensearchUrlV2,
+                            additionalDatasetConfig: item.additionalDatasetConfig
+                        }),
                         active: false
                     });
                 } else {

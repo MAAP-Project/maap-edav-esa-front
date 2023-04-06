@@ -1,0 +1,77 @@
+.adam-opensearch-dataset-discovery-provider-query {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .adam-opensearch-dataset-discovery-provider-query-datasets {
+        flex-grow: 1;
+        overflow: hidden;
+        margin-bottom: @margin-sm;
+
+        .ant-spin-nested-loading {
+            min-height: 20px;
+        }
+
+        .adam-opensearch-dataset-discovery-provider-query-datasets-title {
+            flex-shrink: 0;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: @primary-color;
+        }
+
+        .adam-opensearch-dataset-discovery-provider-query-datasets-items {
+            flex-grow: 1;
+            overflow: auto;
+            margin-left: @margin-sm;
+        }
+    }
+}
+
+.adam-opensearch-dataset-discovery-provider-results {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 100%;
+    .ant-tabs-nav {
+        margin: @margin-xs 0 @margin-xs 0;
+    }
+
+    .ant-tabs, .ant-tabs-content-holder, .ant-tabs-content, .ant-tabs-tabpane {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-height: 100%;
+    }
+}
+.adam-opensearch-dataset-info {
+    width: 400px;
+    
+    .adam-opensearch-dataset-info-description {
+        margin-bottom: @margin-sm;
+    }
+
+    .ant-descriptions-header {
+        margin-bottom: @margin-xss;
+        .ant-descriptions-title {
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 1;
+        }
+    }
+    .ant-descriptions-view {
+        margin-left: @margin-xss;
+    }
+
+    table {
+        
+        .ant-descriptions-item {
+            padding-bottom: @padding-xss;
+
+            .ant-descriptions-item-label {
+                color: @text-color-secondary;
+            }
+        }
+    }
+
+}

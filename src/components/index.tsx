@@ -4,11 +4,14 @@ import React from 'react';
 import { DatasetDiscoveryProviderFactory } from '@oidajs/eo-mobx-react';
 import {
     ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE,
-    AdamFeaturedDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProvider
+    AdamFeaturedDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProvider,
+    ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE_V2,
+    AdamOpensearchDatasetDiscoveryProviderV2
  } from '@oidajs/eo-adapters-adam';
 
 import { AdamFeaturedDatasetDiscoveryProvider as AdamFeaturedDatasetDiscoveryProviderComponent } from './adam-featured-dataset-discovery-provider';
 import { AdamOpensearchDatasetDiscoveryProvider as AdamOpensearchDatasetDiscoveryProviderComponent } from './adam-opensearch-dataset-discovery-provider';
+import { AdamOpensearchDatasetDiscoveryProviderV2 as AdamOpensearchDatasetDiscoveryProviderComponentV2 } from './adam-opensearch-dataset-discovery-provider-v2';
 import { FeaturedDatasetDiscoveryProviderComponent } from './featured-dataset-discovery-provider';
 import { FeaturedDatasetDiscoveryProvider, FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE } from '../store';
 
@@ -22,6 +25,9 @@ declare module '@oidajs/eo-mobx-react' {
         };
         [FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE]: {
             provider: FeaturedDatasetDiscoveryProvider
+        };
+        [ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE_V2]: {
+            provider: AdamOpensearchDatasetDiscoveryProviderV2
         };
     }
 }
@@ -50,10 +56,19 @@ DatasetDiscoveryProviderFactory.register(FEATURED_DATASET_DISCOVERY_PROVIDER_TYP
     );
 });
 
+DatasetDiscoveryProviderFactory.register(ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE_V2, (config) => {
+    return (
+        <AdamOpensearchDatasetDiscoveryProviderComponentV2
+            {...config}
+        />
+    );
+});
+
 export * from './dataset-layer-pane';
 export * from './dataset-timeline';
 export * from './adam-featured-dataset-discovery-provider';
 export * from './adam-opensearch-dataset-discovery-provider';
+export * from './adam-opensearch-dataset-discovery-provider-v2';
 export * from './featured-dataset-discovery-provider';
 export * from './app-header';
 export * from './map-mouse-coords';
