@@ -1,6 +1,6 @@
 {
   "name": "@cgi-italy/maap",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "MAAP client",
   "main": "src/index.tsx",
   "scripts": {
@@ -49,8 +49,8 @@
   },
   "dependencies": {
     "@oidajs/core": "^4.7.0",
-    "@oidajs/eo-adapters-adam": "^3.2.1",
-    "@oidajs/eo-geotiff": "^3.0.5",
+    "@oidajs/eo-adapters-adam": "^3.2.2",
+    "@oidajs/eo-geotiff": "^3.0.6",
     "@oidajs/eo-mobx": "^3.1.0",
     "@oidajs/eo-mobx-react": "^4.2.0",
     "@oidajs/map-cesium": "^3.3.3",
