@@ -2,7 +2,22 @@
   {
     "id": "maap",
     "name": "MAAP",
-    "opensearchUrlV2": "https://edav-das.dev.esa-maap.org/v1/opensearch"
+    "opensearchUrlV2": "https://edav-das.dev.esa-maap.org/v1/opensearch",
+    "additionalDatasetConfig": {
+      "s1_tiling": {
+        "checked": true,
+        "subdatasets": [{
+          "id": "s1_tiling_B0",
+          "default": {
+            "colorScale": "greys",
+            "range": {
+              "min": 0,
+              "max": 0.5
+            }
+          }
+        }]
+      }
+    }
   },
   {
     "id": "nasa",
