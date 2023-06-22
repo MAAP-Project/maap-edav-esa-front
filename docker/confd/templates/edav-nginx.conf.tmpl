@@ -3,7 +3,7 @@ server {
     index index.html;
 
     location /fos/ {
-        proxy_pass https://forest-observation-system.net/;
+        proxy_pass {{ getenv "FOS_API_URL" }};
     }
 
     location /esa-pdgs/ {

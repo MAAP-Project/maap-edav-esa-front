@@ -100,7 +100,7 @@
       "wpsServiceUrl": "https://edav-wps.adamplatform.eu/wps"
     },
     "fosService": {
-      "url": "https://forest-observation-system.net",
+      "url": "https://data.geo-trees.org",
       "intendedUse": "view",
       "applicationId": "maap",
       "dasAccess": {
@@ -110,9 +110,9 @@
     },
     "datasets": [{
         "id": "fos",
-        "name": "FOS plots",
+        "name": "Geo-Trees forest plot biomass data",
         "datasetType": "fos",
-        "description": "The Forest Observation System is an international cooperation to establish a global in-situ forest biomass database to support earth observation and to encourage investment in relevant field-based observations and science. The Forest Observation System provides well curated biomass plot data in a unified format, that is aggregated from tree level data consistently across different networks."
+        "description": "Geo-Trees is an ESA-funded digital infrastructure designed to provide ground-based biomass data to the community in open access. The Forest Biomass Reference System will be centered on about 100 Biomass Reference Measurement (BRM) sites distributed around the world, with strong priority placed on the tropics, and an additional 210 distributed BRM sites which do not require the long-term infrastructure of BRM sites, but provide much better strategic gap-filling than is otherwise possible. Biomass Reference Measurement sites (BRM) are in situ forest measurement sites which standardized measurement sites share a common standard for high-quality data acquisition, with transparent measurement protocols, a long-term monitoring strategy, and measurements traceable to SI units."
       }, {
       "id": "biosar-1",
       "name": "Biosar 1",

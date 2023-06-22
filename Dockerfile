@@ -5,6 +5,7 @@ ENV BASE_URL=/
 
 ## nginx config ##
 ENV ESA_PDGS_URL=https://dev.datacube.pdgs.eo.esa.int/
+ENV FOS_API_URL=https://data.geo-trees.org/
 ENV NGINX_REAL_IPS_FROM=10.0.0.0/8;172.16.0.0/12;192.168.0.0/16
 ENV SOURCE_MAP_ALLOWED_IPS=87.10.0.0/16
 
