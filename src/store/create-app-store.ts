@@ -2,16 +2,23 @@ import { Color, IFeatureStyle } from '@oidajs/core';
 import { GroupLayer } from '@oidajs/state-mobx';
 import { HasAppModules, AppModules, bindAoiValueToMap } from '@oidajs/ui-react-mobx';
 import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps, defaultDiscoveryFootprintStyle } from '@oidajs/eo-mobx';
-import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchDatasetDiscoveryClientV2, AdamOpensearchMetadataModelVersion } from '@oidajs/eo-adapters-adam';
+import {
+    AdamOpensearchDatasetDiscoveryClient,
+    AdamOpensearchDatasetDiscoveryClientV2,
+    AdamOpensearchMetadataModelVersion
+} from '@oidajs/eo-adapters-adam';
 
 import { initMapModule } from './init-map-module';
 import { initAoiModule } from './init-aoi-module';
 import { initFormattersModule } from './init-formatters-module';
 
 import { initBreadcrumbModule } from './init-breadcrumb-module';
-import { initFeaturedDatasetsProvider, initAdamOpensearchDatasetProvider, initAdamOpensearchDatasetProviderV2 } from './init-adam-dataset-provider';
+import {
+    initFeaturedDatasetsProvider,
+    initAdamOpensearchDatasetProvider,
+    initAdamOpensearchDatasetProviderV2
+} from './init-adam-dataset-provider';
 import { WcsUrlMapper } from './wcs-url-mapper';
-
 
 export type AppStateProps = {
     discovery: DatasetDiscoveryProps;
@@ -19,7 +26,6 @@ export type AppStateProps = {
 };
 
 export class AppState implements HasAppModules {
-
     readonly modules: AppModules;
     readonly datasetExplorer: DatasetExplorer;
     readonly datasetDiscovery: DatasetDiscovery;
@@ -38,7 +44,6 @@ export class AppState implements HasAppModules {
 }
 
 export const createAppStore = (config) => {
-
     const wcsUrlMapper = new WcsUrlMapper({
         discoveryProviders: config.discovery
     });
@@ -94,7 +99,6 @@ export const createAppStore = (config) => {
                 }
                 return style;
             }
-
         },
         wcsUrlMapper: wcsUrlMapper
     });
@@ -126,4 +130,3 @@ export const createAppStore = (config) => {
 
     return appState;
 };
-

@@ -6,20 +6,20 @@ import { SettingFilled, SearchOutlined, InfoCircleFilled } from '@ant-design/ico
 import { AppSettings } from './app-settings';
 import logo from '../../assets/logo.png';
 
-
 export const AppHeader = () => {
-
     const [showSettings, setShowSettings] = useState(false);
     const navigate = useNavigate();
 
     return (
         <div className='app-top-bar'>
-            <div className='app-logo'><img src={logo}></img></div>
+            <div className='app-logo'>
+                <img src={logo}></img>
+            </div>
             <div className='app-header-tools'>
                 <Tooltip title='Data discovery'>
-                    <Button icon={<SearchOutlined/>} onClick={() => navigate('/discovery')}/>
+                    <Button icon={<SearchOutlined />} onClick={() => navigate('/discovery')} />
                 </Tooltip>
-                <Button icon={<SettingFilled/>} onClick={() => setShowSettings(true)}/>
+                <Button icon={<SettingFilled />} onClick={() => setShowSettings(true)} />
             </div>
             <Drawer
                 title='Settings'
@@ -28,7 +28,11 @@ export const AppHeader = () => {
                 className='settings-drawer'
                 onClose={() => setShowSettings(false)}
                 open={showSettings}
-                footer={<div className='app-info'><InfoCircleFilled/> Client version: {window['appVersion']}</div>}
+                footer={
+                    <div className='app-info'>
+                        <InfoCircleFilled /> Client version: {window['appVersion']}
+                    </div>
+                }
             >
                 <AppSettings></AppSettings>
             </Drawer>

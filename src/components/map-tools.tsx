@@ -12,8 +12,8 @@ export type MapToolsProps = {
 export const MapTools = (props: MapToolsProps) => {
     return (
         <div className='map-tools'>
-            <AoiTool explorerState={props.explorerState}/>
-            <MapNavControls/>
+            <AoiTool explorerState={props.explorerState} />
+            <MapNavControls />
         </div>
     );
 };

@@ -20,10 +20,10 @@ export const DatasetDownloadModal = (props: DatasetVizDownloadModalProps) => {
         return null;
     }
 
-    let formId = 'dataset-viz-download-form';
+    const formId = 'dataset-viz-download-form';
 
-    let [visible, setVisible] = useState(true);
-    let [formState, setFormState] = useState<DatasetDownloadFormSubmitState>(DatasetDownloadFormSubmitState.Ready);
+    const [visible, setVisible] = useState(true);
+    const [formState, setFormState] = useState<DatasetDownloadFormSubmitState>(DatasetDownloadFormSubmitState.Ready);
 
     const [formInstance] = useForm(props.formInstance);
 

@@ -7,33 +7,26 @@ import { VECTOR_VIZ_TYPE, VERTICAL_PROFILE_VIZ_TYPE } from '@oidajs/eo-mobx';
 import { DatasetAnalysesDashboard, DatasetDiscoveryDrawer, DatasetDiscoveryProviderComboSelector } from '@oidajs/eo-mobx-react';
 
 import { AppHeader, DatasetTimeline, DatasetLayerPane, MapMouseCoords, MapTools } from './components';
-import { AppState } from './store' ;
+import { AppState } from './store';
 
 import '../style/app.less';
-
 
 export type AppProps = {
     appState: AppState;
 };
 
 export const App = (props: AppProps) => {
-
     const navigate = useNavigate();
 
     return (
         <React.Fragment>
-            <MapComponent/>
+            <MapComponent />
             <ThreeColumnLayout
                 className='app-layout'
-                left={
-                    <DatasetLayerPane
-                        explorerState={props.appState.datasetExplorer}
-                        onAddLayerClick={() => navigate('/discovery')}
-                    />
-                }
+                left={<DatasetLayerPane explorerState={props.appState.datasetExplorer} onAddLayerClick={() => navigate('/discovery')} />}
                 main={
                     <React.Fragment>
-                        <AppHeader/>
+                        <AppHeader />
                         <ScrollableOverlay className='analysis-scrollable-overlay'>
                             <DatasetAnalysesDashboard
                                 datasetsExplorer={props.appState.datasetExplorer}
@@ -62,15 +55,13 @@ export const App = (props: AppProps) => {
                                 disableRenaming={true}
                             />
                         </ScrollableOverlay>
-                        <MapTools explorerState={props.appState.datasetExplorer}/>
+                        <MapTools explorerState={props.appState.datasetExplorer} />
                     </React.Fragment>
                 }
                 bottom={
                     <React.Fragment>
-                        <DatasetTimeline
-                            datasetExplorer={props.appState.datasetExplorer}
-                        />
-                        <MapMouseCoords/>
+                        <DatasetTimeline datasetExplorer={props.appState.datasetExplorer} />
+                        <MapMouseCoords />
                     </React.Fragment>
                 }
             />
@@ -87,7 +78,7 @@ export const App = (props: AppProps) => {
                                 navigate(`/`);
                             }}
                             closeOnSelection={true}
-                            providerSelector={(props) => <DatasetDiscoveryProviderComboSelector label='Catalogue' {...props}/>}
+                            providerSelector={(props) => <DatasetDiscoveryProviderComboSelector label='Catalogue' {...props} />}
                         />
                     }
                 />

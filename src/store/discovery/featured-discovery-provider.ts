@@ -4,7 +4,6 @@ import { Geometry, SortOrder } from '@oidajs/core';
 import { DatasetConfig, DatasetDiscoveryProvider, DatasetDiscoveryProviderProps } from '@oidajs/eo-mobx';
 import { Entity, QueryParams, QueryParamsProps } from '@oidajs/state-mobx';
 
-
 export const FEATURED_DATASET_DISCOVERY_ITEM_TYPE = 'featured_discovery_item';
 
 export type FeaturedDatasetConfig = {
@@ -15,10 +14,7 @@ export type FeaturedDatasetConfig = {
     geometry?: Geometry;
 };
 
-export class FeaturedDatasetDiscoveryProviderItem
-<T extends FeaturedDatasetConfig = FeaturedDatasetConfig>
-extends Entity {
-
+export class FeaturedDatasetDiscoveryProviderItem<T extends FeaturedDatasetConfig = FeaturedDatasetConfig> extends Entity {
     metadata: T;
 
     constructor(props: T) {
@@ -42,36 +38,33 @@ export type FeaturedDatasetDiscoveryJsonSchema = {
 
 export const FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE = 'featured_dataset_discovery_provider';
 
-export type FeatureDatasetDiscoveryProviderFactory
-<T extends FeaturedDatasetConfig = FeaturedDatasetConfig> =
-(featuredDataset: T) =>  Promise<DatasetConfig>;
+export type FeatureDatasetDiscoveryProviderFactory<T extends FeaturedDatasetConfig = FeaturedDatasetConfig> = (
+    featuredDataset: T
+) => Promise<DatasetConfig>;
 
-export type FeaturedDatasetDiscoveryProviderProps
-<T extends FeaturedDatasetConfig = FeaturedDatasetConfig> = {
+export type FeaturedDatasetDiscoveryProviderProps<T extends FeaturedDatasetConfig = FeaturedDatasetConfig> = {
     datasets: T[];
     datasetFactory: FeatureDatasetDiscoveryProviderFactory<T>;
     queryParams?: QueryParamsProps;
 } & DatasetDiscoveryProviderProps<typeof FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE>;
 
-export class FeaturedDatasetDiscoveryProvider
-<T extends FeaturedDatasetConfig = FeaturedDatasetConfig>
-extends DatasetDiscoveryProvider<FeaturedDatasetDiscoveryProviderItem<T>, FeaturedDatasetDiscoveryJsonSchema> {
-
+export class FeaturedDatasetDiscoveryProvider<T extends FeaturedDatasetConfig = FeaturedDatasetConfig> extends DatasetDiscoveryProvider<
+    FeaturedDatasetDiscoveryProviderItem<T>,
+    FeaturedDatasetDiscoveryJsonSchema
+> {
     readonly criteria: QueryParams;
     protected datasetFactory_: FeatureDatasetDiscoveryProviderFactory<T>;
 
     protected datasets_: FeaturedDatasetDiscoveryProviderItem<T>[];
 
-    constructor(props:
-        Omit<FeaturedDatasetDiscoveryProviderProps<T>, 'providerType'>
-    ) {
+    constructor(props: Omit<FeaturedDatasetDiscoveryProviderProps<T>, 'providerType'>) {
         super({
             providerType: FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE,
             ...props
         });
 
         this.criteria = new QueryParams(props.queryParams);
-        this.datasets_ = props.datasets.map((dataset) =>  new FeaturedDatasetDiscoveryProviderItem(dataset));
+        this.datasets_ = props.datasets.map((dataset) => new FeaturedDatasetDiscoveryProviderItem(dataset));
         this.datasetFactory_ = props.datasetFactory;
 
         this.afterInit_();

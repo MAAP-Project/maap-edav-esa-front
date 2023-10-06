@@ -1,13 +1,14 @@
-
 import React from 'react';
 
 import { DatasetDiscoveryProviderFactory } from '@oidajs/eo-mobx-react';
 import {
-    ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE,
-    AdamFeaturedDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProvider,
+    ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE,
+    ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE,
+    AdamFeaturedDatasetDiscoveryProvider,
+    AdamOpensearchDatasetDiscoveryProvider,
     ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE_V2,
     AdamOpensearchDatasetDiscoveryProviderV2
- } from '@oidajs/eo-adapters-adam';
+} from '@oidajs/eo-adapters-adam';
 
 import { AdamFeaturedDatasetDiscoveryProvider as AdamFeaturedDatasetDiscoveryProviderComponent } from './adam-featured-dataset-discovery-provider';
 import { AdamOpensearchDatasetDiscoveryProvider as AdamOpensearchDatasetDiscoveryProviderComponent } from './adam-opensearch-dataset-discovery-provider';
@@ -18,50 +19,34 @@ import { FeaturedDatasetDiscoveryProvider, FEATURED_DATASET_DISCOVERY_PROVIDER_T
 declare module '@oidajs/eo-mobx-react' {
     interface DatasetDiscoveryProviderDefinitions {
         [ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE]: {
-            provider: AdamFeaturedDatasetDiscoveryProvider
+            provider: AdamFeaturedDatasetDiscoveryProvider;
         };
         [ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE]: {
-            provider: AdamOpensearchDatasetDiscoveryProvider
+            provider: AdamOpensearchDatasetDiscoveryProvider;
         };
         [FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE]: {
-            provider: FeaturedDatasetDiscoveryProvider
+            provider: FeaturedDatasetDiscoveryProvider;
         };
         [ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE_V2]: {
-            provider: AdamOpensearchDatasetDiscoveryProviderV2
+            provider: AdamOpensearchDatasetDiscoveryProviderV2;
         };
     }
 }
 
 DatasetDiscoveryProviderFactory.register(ADAM_FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, (config) => {
-    return (
-        <AdamFeaturedDatasetDiscoveryProviderComponent
-            {...config}
-        />
-    );
+    return <AdamFeaturedDatasetDiscoveryProviderComponent {...config} />;
 });
 
 DatasetDiscoveryProviderFactory.register(ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE, (config) => {
-    return (
-        <AdamOpensearchDatasetDiscoveryProviderComponent
-            {...config}
-        />
-    );
+    return <AdamOpensearchDatasetDiscoveryProviderComponent {...config} />;
 });
 
 DatasetDiscoveryProviderFactory.register(FEATURED_DATASET_DISCOVERY_PROVIDER_TYPE, (config) => {
-    return (
-        <FeaturedDatasetDiscoveryProviderComponent
-            {...config}
-        />
-    );
+    return <FeaturedDatasetDiscoveryProviderComponent {...config} />;
 });
 
 DatasetDiscoveryProviderFactory.register(ADAM_OPENSEARCH_DATASET_DISCOVERY_PROVIDER_TYPE_V2, (config) => {
-    return (
-        <AdamOpensearchDatasetDiscoveryProviderComponentV2
-            {...config}
-        />
-    );
+    return <AdamOpensearchDatasetDiscoveryProviderComponentV2 {...config} />;
 });
 
 export * from './dataset-layer-pane';

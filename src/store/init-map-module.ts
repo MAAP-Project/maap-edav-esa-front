@@ -6,7 +6,6 @@ import '@oidajs/map-cesium-ol-tile-source';
 import { FeatureHoverInteraction, FeatureSelectInteraction } from '@oidajs/state-mobx';
 
 export const initMapModule = (config) => {
-
     const defaultInitialState = {
         renderer: {
             id: 'cesium'
@@ -40,23 +39,27 @@ export const initMapModule = (config) => {
             }
         },
         config: {
-             baseLayers: baseLayers,
-             projections: projections,
-             renderers: renderers,
-             initialOptions: initialOptions
+            baseLayers: baseLayers,
+            projections: projections,
+            renderers: renderers,
+            initialOptions: initialOptions
         }
     });
 
-    mapModule.map.interactions.add(new FeatureHoverInteraction({
-        selectionManager: mapModule.selectionManager
-    }));
+    mapModule.map.interactions.add(
+        new FeatureHoverInteraction({
+            selectionManager: mapModule.selectionManager
+        })
+    );
 
-    mapModule.map.interactions.add(new FeatureSelectInteraction({
-        config: {
-            multiple: true
-        },
-        selectionManager: mapModule.selectionManager
-    }));
+    mapModule.map.interactions.add(
+        new FeatureSelectInteraction({
+            config: {
+                multiple: true
+            },
+            selectionManager: mapModule.selectionManager
+        })
+    );
 
     return mapModule;
 };

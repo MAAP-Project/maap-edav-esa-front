@@ -5,7 +5,8 @@
   "main": "src/index.tsx",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "lint": "tslint --project ./tsconfig.json",
+    "lint:check": "eslint \"./src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"./src/**/*.{ts,tsx}\" --quiet --fix",
     "oida:link": "node scripts/npm-deps-link @oidajs/core @oidajs/map-ol @oidajs/map-cesium @oidajs/map-cesium-ol-tile-source @oidajs/state-mobx @oidajs/ui-react-core @oidajs/ui-react-mobx @oidajs/ui-react-antd @oidajs/eo-mobx @oidajs/eo-mobx-react @oidajs/eo-geotiff @oidajs/eo-adapters-adam",
     "oida:update:branch": "cross-env-shell npm install @oidajs/core@$BRANCH @oidajs/map-ol@$BRANCH @oidajs/map-cesium@$BRANCH @oidajs/map-cesium-ol-tile-source@$BRANCH @oidajs/state-mobx@$BRANCH @oidajs/ui-react-core@$BRANCH @oidajs/ui-react-mobx@$BRANCH @oidajs/ui-react-antd@$BRANCH @oidajs/eo-mobx@$BRANCH @oidajs/eo-mobx-react@$BRANCH @oidajs/eo-geotiff@$BRANCH @oidajs/eo-adapters-adam@$BRANCH --legacy-peer-deps",
     "oida:update:master": "cross-env-shell BRANCH=master npm run oida:update:branch",
@@ -22,6 +23,8 @@
     "@types/react": "^18.2.24",
     "@types/react-dom": "^18.2.8",
     "@types/webpack-env": "^1.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.2",
