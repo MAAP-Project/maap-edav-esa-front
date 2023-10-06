@@ -8,19 +8,22 @@ const antdConfig = require('@oidajs/ui-react-antd/config/webpack.antd.js');
 
 const { merge } = require('webpack-merge');
 
+const theme = require('./style/theme.js');
+
 const config = (env = {}) => {
     return merge(
         cesiumConfig({ nodeModulesDir: 'node_modules' }),
         antdConfig({
-            styleLoader: env.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader'
+            styleLoader: env.mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+            themeToken: theme.token
         }),
         {
             entry: {
                 app: './src/index.tsx'
             },
             output: {
-                path: env.outpath || path.resolve(__dirname, "dist"),
-                filename: '[name].[contenthash].bundle.js',
+                path: env.outpath || path.resolve(__dirname, 'dist'),
+                filename: '[name].[contenthash].bundle.js'
             },
             resolve: {
                 extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -30,7 +33,7 @@ const config = (env = {}) => {
                     https: false,
                     zlib: false,
                     url: false,
-                    util: require.resolve("util/")
+                    util: require.resolve('util/')
                 }
             },
             target: 'web',
@@ -60,10 +63,7 @@ const config = (env = {}) => {
                     },
                     {
                         test: /\.jsx?$/,
-                        include:[
-                            path.resolve(__dirname, "node_modules/geotiff"),
-                            path.resolve(__dirname, "node_modules/ol")
-                        ],
+                        include: [path.resolve(__dirname, 'node_modules/geotiff'), path.resolve(__dirname, 'node_modules/ol')],
                         use: [
                             {
                                 loader: 'ts-loader',
@@ -99,7 +99,7 @@ const config = (env = {}) => {
                                 }
                             }
                         ]
-                    },
+                    }
                 ]
             },
             plugins: [
@@ -111,8 +111,7 @@ const config = (env = {}) => {
                 })
             ]
         }
-    )
+    );
 };
-
 
 module.exports = config;

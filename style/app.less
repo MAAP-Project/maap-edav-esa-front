@@ -1,26 +1,21 @@
 @import (css) url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap);
 
-@import '~antd/lib/style/themes/default.less';
-@import '~antd/dist/antd.less';
-@import './theme.less';
-
+@import './components/index.less';
 @import '~@oidajs/ui-react-core/styles/index.less';
 @import '~@oidajs/ui-react-antd/styles/index.less';
 @import '~@oidajs/eo-mobx-react/styles/index.less';
 @import '~@oidajs/ui-react-core/styles/utils/scrollbar';
 
-@import './components/index.less';
-
+@import './theme.less';
 
 body {
-    background: white;
+    background: @colorBgContainer;
     overflow: hidden;
     margin: 0;
 
     & * {
         .scrollbar(8px, @primary-color, @primary-2);
     }
-
 
     .map-widget {
         width: 100%;
@@ -77,15 +72,12 @@ body {
             }
 
             .analysis-scrollable-overlay {
-
                 overflow: hidden;
                 margin-top: 50px;
                 padding-right: 40px;
 
                 .scrollable-overlay-content {
-
-                	min-height: 100%;
-
+                    min-height: 100%;
 
                     .dashboard-pane {
                         background: transparent;
@@ -93,7 +85,6 @@ body {
 
                         .dashboard-widget {
                             pointer-events: all;
-
                         }
 
                         .react-grid-placeholder {
@@ -131,4 +122,14 @@ body {
         }
     }
 
+    .ant-btn {
+        &.ant-btn-link {
+            &:not(.ant-btn-disabled) {
+                &:hover,
+                &:focus {
+                    color: @primary-5;
+                }
+            }
+        }
+    }
 }

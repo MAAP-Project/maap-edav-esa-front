@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, message } from 'antd';
+import { Modal, Button, App } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { CopyOutlined, DownloadOutlined } from '@ant-design/icons';
 
@@ -10,10 +10,9 @@ import { useAppStore } from '@oidajs/ui-react-mobx';
 
 import { AppState } from '../store';
 
-
 export const DatasetDownloadModal = (props: DatasetVizDownloadModalProps) => {
-
     const appState = useAppStore<AppState>();
+    const { message } = App.useApp();
 
     const downloadConfig: AdamDatasetDownloadConfig | DatasetDownloadConfig | undefined = props.datasetViz.dataset.config.download;
 
@@ -44,42 +43,43 @@ export const DatasetDownloadModal = (props: DatasetVizDownloadModalProps) => {
             onCancel={() => setVisible(false)}
             footer={
                 <React.Fragment>
-                    <Button
-                        onClick={() => setVisible(false)}
-                    >
-                        Cancel
-                    </Button>
-                    {(downloadConfig as AdamDatasetDownloadConfig).downloadUrlProvider &&
+                    <Button onClick={() => setVisible(false)}>Cancel</Button>
+                    {(downloadConfig as AdamDatasetDownloadConfig).downloadUrlProvider && (
                         <Button
-                            icon={<CopyOutlined/>}
+                            icon={<CopyOutlined />}
                             onClick={() => {
                                 formInstance.validateFields().then(() => {
                                     const values = formInstance.getFieldsValue();
 
-                                    (downloadConfig as AdamDatasetDownloadConfig).downloadUrlProvider({
-                                        datasetViz: props.datasetViz,
-                                        ...values
-                                    }).then((request) => {
-                                        let clipboardText = appState.wcsUrlMapper.mapToInternalUrl(request.url);
-                                        if (request.postData) {
-                                            clipboardText = `POST ${request.url}\n${request.postData}`;
-                                        }
+                                    (downloadConfig as AdamDatasetDownloadConfig)
+                                        .downloadUrlProvider({
+                                            datasetViz: props.datasetViz,
+                                            ...values
+                                        })
+                                        .then((request) => {
+                                            let clipboardText = appState.wcsUrlMapper.mapToInternalUrl(request.url);
+                                            if (request.postData) {
+                                                clipboardText = `POST ${request.url}\n${request.postData}`;
+                                            }
 
-                                        navigator.clipboard.writeText(clipboardText).then(() => {
-                                            message.info('Download request copied to clipboard');
-                                        }).catch((error) => {
-                                            message.error(`Unable to copy request to clipboard: ${error}`);
+                                            navigator.clipboard
+                                                .writeText(clipboardText)
+                                                .then(() => {
+                                                    message.info('Download request copied to clipboard');
+                                                })
+                                                .catch((error) => {
+                                                    message.error(`Unable to copy request to clipboard: ${error}`);
+                                                });
                                         });
-                                    });
                                 });
                             }}
                             disabled={formState === DatasetDownloadFormSubmitState.Invalid}
                         >
                             Copy download request
                         </Button>
-                    }
+                    )}
                     <Button
-                        icon={<DownloadOutlined/>}
+                        icon={<DownloadOutlined />}
                         htmlType='submit'
                         type='primary'
                         form={formId}
@@ -91,12 +91,7 @@ export const DatasetDownloadModal = (props: DatasetVizDownloadModalProps) => {
                 </React.Fragment>
             }
         >
-            <DatasetVizDownload
-                formInstance={formInstance}
-                formId={formId}
-                onSubmitStateChange={onSubmitStateChange}
-                {...props}
-            />
+            <DatasetVizDownload formInstance={formInstance} formId={formId} onSubmitStateChange={onSubmitStateChange} {...props} />
         </Modal>
     );
 };
