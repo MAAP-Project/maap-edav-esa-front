@@ -36,7 +36,8 @@ export const initFeaturedDatasetsProvider = (config: {
     fosService: FosDatasetFactoryConfig;
 }) => {
     const coverageDescriptionClient = new AdamWcsCoverageDescriptionClient({
-        wcsUrl: config.edavServices.wcsServiceUrl
+        wcsUrl: config.edavServices.wcsServiceUrl,
+        axiosInstance: config.edavServices.axiosInstance
     });
     const edavFactory = getAdamDatasetFactory(config.edavServices);
     const fosFactory = getFosDatasetFactory(config.fosService);
