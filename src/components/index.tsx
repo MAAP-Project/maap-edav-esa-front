@@ -58,3 +58,4 @@ export * from './featured-dataset-discovery-provider';
 export * from './app-header';
 export * from './map-mouse-coords';
 export * from './map-tools';
+export * from './layer-swipe-control';

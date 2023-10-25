@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { Button, Tooltip } from 'antd';
 import { LeftOutlined, PlusOutlined } from '@ant-design/icons';
 
+import { Map } from '@oidajs/state-mobx';
 import { DatasetExplorer } from '@oidajs/eo-mobx';
 import { DatasetExplorerMapViz } from '@oidajs/eo-mobx-react';
 import { LayerGroupSolidIcon } from '@oidajs/ui-react-antd';
@@ -12,6 +13,7 @@ import { DatasetDownloadModal } from './dataset-download';
 
 export type DatasetLayerPaneProps = {
     explorerState: DatasetExplorer;
+    mapState: Map;
     onAddLayerClick: () => void;
     title?: string;
 };
@@ -46,6 +48,7 @@ export const DatasetLayerPane = (props: DatasetLayerPaneProps) => {
                 </div>
                 <DatasetExplorerMapViz
                     explorerState={props.explorerState}
+                    mapState={props.mapState}
                     analyticsTools={analyticsTools}
                     datasetDownloadComponent={DatasetDownloadModal}
                     disableDatasetRenaming={true}
