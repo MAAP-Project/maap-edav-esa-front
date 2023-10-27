@@ -115,6 +115,7 @@ export const createAppStore = (config) => {
                         additionalDatasetConfig: item.additionalDatasetConfig
                     }),
                     axiosInstance: axiosInstance,
+                    disabled: item.protected && !appState.userSession.accessToken,
                     active: false
                 });
             } else {

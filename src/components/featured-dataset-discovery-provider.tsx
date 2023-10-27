@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { App } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { IFormFieldDefinition, STRING_FIELD_ID } from '@oidajs/core';
@@ -13,6 +13,7 @@ import {
     useMapSelection
 } from '@oidajs/ui-react-mobx';
 import { DatasetExplorer } from '@oidajs/eo-mobx';
+
 import { FeaturedDatasetDiscoveryProvider, FeaturedDatasetDiscoveryProviderItem } from '../store';
 
 export type FeaturedDatasetDiscoveryProviderComponentProps = {
@@ -22,6 +23,8 @@ export type FeaturedDatasetDiscoveryProviderComponentProps = {
 };
 
 export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDatasetDiscoveryProviderComponentProps) => {
+    const { message } = App.useApp();
+
     const searchFilters: IFormFieldDefinition[] = [
         {
             name: 'q',
@@ -41,12 +44,17 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
             content: 'Add to map',
             icon: <PlusOutlined />,
             callback: (item: FeaturedDatasetDiscoveryProviderItem) => {
-                return props.provider.createDataset(item).then((datasetConfig) => {
-                    props.datasetExplorer.addDataset(datasetConfig);
-                    if (props.onDatasetAdd) {
-                        props.onDatasetAdd();
-                    }
-                });
+                return props.provider
+                    .createDataset(item)
+                    .then((datasetConfig) => {
+                        props.datasetExplorer.addDataset(datasetConfig);
+                        if (props.onDatasetAdd) {
+                            props.onDatasetAdd();
+                        }
+                    })
+                    .catch((error) => {
+                        message.error(`Unable to initialize map layer: ${error}`);
+                    });
             },
             condition: (entity) => {
                 return true;

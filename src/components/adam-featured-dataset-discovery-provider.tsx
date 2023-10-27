@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { App } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { IFormFieldDefinition, STRING_FIELD_ID } from '@oidajs/core';
@@ -24,6 +24,8 @@ export type AdamFeaturedDatasetDiscoveryProviderProps = {
 };
 
 export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetDiscoveryProviderProps) => {
+    const { message } = App.useApp();
+
     const searchFilters: IFormFieldDefinition[] = [
         {
             name: 'q',
@@ -43,9 +45,14 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
             content: 'Add to map',
             icon: <PlusOutlined />,
             callback: (item: AdamFeaturedDatasetDiscoveryProviderItem) => {
-                return props.provider.createDataset(item).then((datasetConfig) => {
-                    props.datasetExplorer.addDataset(datasetConfig);
-                });
+                return props.provider
+                    .createDataset(item)
+                    .then((datasetConfig) => {
+                        props.datasetExplorer.addDataset(datasetConfig);
+                    })
+                    .catch((error) => {
+                        message.error(`Unable to initialize map layer: ${error}`);
+                    });
             },
             condition: (entity) => {
                 return true;
