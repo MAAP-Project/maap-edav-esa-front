@@ -1,9 +1,16 @@
 import {
-    AdamDatasetFactoryConfig, AdamDatasetRenderMode, AdamFeaturedDataset, AdamFeaturedDatasetDiscoveryProvider,
-    AdamFeaturedDatasetDiscoveryProviderProps, AdamOpensearchDatasetDiscoveryProvider, AdamOpensearchDatasetDiscoveryProviderProps,
+    AdamDatasetFactoryConfig,
+    AdamDatasetRenderMode,
+    AdamFeaturedDataset,
+    AdamFeaturedDatasetDiscoveryProvider,
+    AdamFeaturedDatasetDiscoveryProviderProps,
+    AdamOpensearchDatasetDiscoveryProvider,
+    AdamOpensearchDatasetDiscoveryProviderProps,
     AdamOpensearchDatasetDiscoveryProviderPropsV2,
     AdamOpensearchDatasetDiscoveryProviderV2,
-    AdamWcsCoverageDescriptionClient, getAdamDatasetFactory, isMultiBandCoverage
+    AdamWcsCoverageDescriptionClient,
+    getAdamDatasetFactory,
+    isMultiBandCoverage
 } from '@oidajs/eo-adapters-adam';
 import { FeatureDatasetDiscoveryProviderFactory, FeaturedDatasetConfig, FeaturedDatasetDiscoveryProvider } from './discovery';
 import { FosDatasetFactoryConfig, getFosDatasetFactory } from './fos';
@@ -20,17 +27,17 @@ export const initAdamOpensearchDatasetProviderV2 = (config: Omit<AdamOpensearchD
     return new AdamOpensearchDatasetDiscoveryProviderV2(config);
 };
 
-export type FeaturedDatasetType = (AdamFeaturedDataset & {datasetType: 'edav'}) | (FeaturedDatasetConfig & {datasetType: 'fos'});
+export type FeaturedDatasetType = (AdamFeaturedDataset & { datasetType: 'edav' }) | (FeaturedDatasetConfig & { datasetType: 'fos' });
 export const initFeaturedDatasetsProvider = (config: {
-    id: string,
-    name: string,
-    edavServices: AdamDatasetFactoryConfig,
-    datasets: FeaturedDatasetType[],
-    fosService: FosDatasetFactoryConfig
+    id: string;
+    name: string;
+    edavServices: AdamDatasetFactoryConfig;
+    datasets: FeaturedDatasetType[];
+    fosService: FosDatasetFactoryConfig;
 }) => {
-
     const coverageDescriptionClient = new AdamWcsCoverageDescriptionClient({
-        wcsUrl: config.edavServices.wcsServiceUrl
+        wcsUrl: config.edavServices.wcsServiceUrl,
+        axiosInstance: config.edavServices.axiosInstance
     });
     const edavFactory = getAdamDatasetFactory(config.edavServices);
     const fosFactory = getFosDatasetFactory(config.fosService);

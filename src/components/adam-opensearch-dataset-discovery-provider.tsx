@@ -1,16 +1,22 @@
 import React from 'react';
 
-import { message } from 'antd';
+import { App } from 'antd';
 import { PlusOutlined, AimOutlined } from '@ant-design/icons';
 
 import { DataCollectionCompactListItem, DataCollectionList } from '@oidajs/ui-react-antd';
-import { useCenterOnMapFromModule, useDataPaging, useDataSorting, useEntityCollectionList, useMapSelection, useSelector } from '@oidajs/ui-react-mobx';
+import {
+    useCenterOnMapFromModule,
+    useDataPaging,
+    useDataSorting,
+    useEntityCollectionList,
+    useMapSelection,
+    useSelector
+} from '@oidajs/ui-react-mobx';
 import { DatasetExplorer } from '@oidajs/eo-mobx';
 import {
     AdamOpensearchDatasetDiscoveryProvider as AdamDatasetDiscoveryProviderState,
     AdamOpensearchDatasetDiscoveryProviderItem
 } from '@oidajs/eo-adapters-adam';
-
 
 export type AdamOpensearchDatasetDiscoveryProviderProps = {
     provider: AdamDatasetDiscoveryProviderState;
@@ -19,7 +25,7 @@ export type AdamOpensearchDatasetDiscoveryProviderProps = {
 };
 
 export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchDatasetDiscoveryProviderProps) => {
-
+    const { message } = App.useApp();
 
     const centerOnMap = useCenterOnMapFromModule();
 
@@ -27,7 +33,7 @@ export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchData
         {
             name: 'Center on map',
             content: 'Center on map',
-            icon: (<AimOutlined/>),
+            icon: <AimOutlined />,
             callback: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
                 centerOnMap(item.geometry, {
                     animate: true
@@ -40,16 +46,19 @@ export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchData
         {
             name: 'Add to map',
             content: 'Add to map',
-            icon: (<PlusOutlined/>),
+            icon: <PlusOutlined />,
             callback: (item: AdamOpensearchDatasetDiscoveryProviderItem) => {
-                return props.provider.createDataset(item).then((datasetConfig) => {
-                    props.datasetExplorer.addDataset(datasetConfig);
-                    if (props.onDatasetAdd) {
-                        props.onDatasetAdd();
-                    }
-                }).catch((error) => {
-                    message.error(`Unable to initialize map layer: ${error}`);
-                });
+                return props.provider
+                    .createDataset(item)
+                    .then((datasetConfig) => {
+                        props.datasetExplorer.addDataset(datasetConfig);
+                        if (props.onDatasetAdd) {
+                            props.onDatasetAdd();
+                        }
+                    })
+                    .catch((error) => {
+                        message.error(`Unable to initialize map layer: ${error}`);
+                    });
             },
             condition: (entity) => {
                 return true;
@@ -62,10 +71,12 @@ export const AdamOpensearchDatasetDiscoveryProvider = (props: AdamOpensearchData
     const pagingProps = useDataPaging(props.provider.criteria.paging);
     const sortingProps = useDataSorting({
         sortingState: props.provider.criteria.sorting,
-        sortableFields: [{
-            key: 'title',
-            name: 'Name'
-        }]
+        sortableFields: [
+            {
+                key: 'title',
+                name: 'Name'
+            }
+        ]
     });
 
     const mapSelection = useMapSelection();

@@ -2,11 +2,10 @@ export type WcsUrlMapperConfig = {
     discoveryProviders: Array<{
         wcsUrl: string;
         internalWcsUrl?: string;
-    }>
+    }>;
 };
 
 export class WcsUrlMapper {
-
     protected wcsUrlMap_: Record<string, string>;
     constructor(config: WcsUrlMapperConfig) {
         this.wcsUrlMap_ = config.discoveryProviders.reduce((urlMap, item) => {
@@ -25,7 +24,7 @@ export class WcsUrlMapper {
         const wcsUrl = url.split('?')[0];
         const internalWcsUrl = this.wcsUrlMap_[wcsUrl];
         if (internalWcsUrl) {
-           return url.replace(wcsUrl, internalWcsUrl);
+            return url.replace(wcsUrl, internalWcsUrl);
         } else {
             return url;
         }

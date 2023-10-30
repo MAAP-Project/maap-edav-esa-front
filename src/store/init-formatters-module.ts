@@ -1,8 +1,4 @@
-import {
-    formatMapCoord, MapCoordQuantity,
-    formatDate, DateQuantity,
-    formatFilesize, FilesizeQuantity, FilesizeUnit
-} from '@oidajs/core';
+import { formatMapCoord, MapCoordQuantity, formatDate, DateQuantity, formatFilesize, FilesizeQuantity, FilesizeUnit } from '@oidajs/core';
 
 import { FormattersModule } from '@oidajs/ui-react-mobx';
 
@@ -16,7 +12,7 @@ export const initFormattersModule = () => {
                     id: 'dms',
                     name: 'DMS',
                     options: {
-                        format: 'dms',
+                        format: 'dms'
                     }
                 },
                 {
@@ -29,7 +25,8 @@ export const initFormattersModule = () => {
                 }
             ],
             initialOptions: 'dms'
-        }, {
+        },
+        {
             quantity: DateQuantity,
             formatter: formatDate,
             formatterOptionPresets: [
@@ -37,12 +34,13 @@ export const initFormattersModule = () => {
                     id: 'utc',
                     name: 'UTC',
                     options: {
-                        format: 'YYYY-MM-DD HH:mm:ss',
+                        format: 'YYYY-MM-DD HH:mm:ss'
                     }
                 }
             ],
             initialOptions: 'utc'
-        }, {
+        },
+        {
             quantity: FilesizeQuantity,
             formatter: formatFilesize,
             formatterOptionPresets: [

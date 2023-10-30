@@ -15,10 +15,9 @@ export const AoiTool = (props: AoiToolProps) => {
     const aoiField = aoiFieldFactory({
         name: 'aoi',
         supportedActions: [AoiAction.DrawBBox, AoiAction.DrawPolygon, AoiAction.Import],
-        supportedGeometries: [{type: 'BBox'}, {type: 'Polygon'}],
+        supportedGeometries: [{ type: 'BBox' }, { type: 'Polygon' }],
         title: 'Area of interest'
     });
-
 
     const aoiValue = useSelector(() => {
         return props.explorerState.aoi;
@@ -30,7 +29,7 @@ export const AoiTool = (props: AoiToolProps) => {
 
     let aoiFieldConfig: AoiFieldConfig;
 
-    if (typeof(aoiField.config) === 'function') {
+    if (typeof aoiField.config === 'function') {
         aoiFieldConfig = aoiField.config({
             value: aoiValue,
             onChange: onAoiChange

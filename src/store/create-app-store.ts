@@ -1,17 +1,27 @@
-import { Color, IFeatureStyle } from '@oidajs/core';
+import { reaction } from 'mobx';
+
+import { AxiosInstanceWithCancellation, Color, IFeatureStyle } from '@oidajs/core';
 import { GroupLayer } from '@oidajs/state-mobx';
 import { HasAppModules, AppModules, bindAoiValueToMap } from '@oidajs/ui-react-mobx';
 import { DatasetExplorer, DatasetDiscovery, DatasetDiscoveryProps, defaultDiscoveryFootprintStyle } from '@oidajs/eo-mobx';
-import { AdamOpensearchDatasetDiscoveryClient, AdamOpensearchDatasetDiscoveryClientV2, AdamOpensearchMetadataModelVersion } from '@oidajs/eo-adapters-adam';
+import {
+    AdamOpensearchDatasetDiscoveryClient,
+    AdamOpensearchDatasetDiscoveryClientV2,
+    AdamOpensearchMetadataModelVersion
+} from '@oidajs/eo-adapters-adam';
 
 import { initMapModule } from './init-map-module';
 import { initAoiModule } from './init-aoi-module';
 import { initFormattersModule } from './init-formatters-module';
 
 import { initBreadcrumbModule } from './init-breadcrumb-module';
-import { initFeaturedDatasetsProvider, initAdamOpensearchDatasetProvider, initAdamOpensearchDatasetProviderV2 } from './init-adam-dataset-provider';
+import {
+    initFeaturedDatasetsProvider,
+    initAdamOpensearchDatasetProvider,
+    initAdamOpensearchDatasetProviderV2
+} from './init-adam-dataset-provider';
 import { WcsUrlMapper } from './wcs-url-mapper';
-
+import { UserSession } from './user-session';
 
 export type AppStateProps = {
     discovery: DatasetDiscoveryProps;
@@ -19,10 +29,10 @@ export type AppStateProps = {
 };
 
 export class AppState implements HasAppModules {
-
     readonly modules: AppModules;
     readonly datasetExplorer: DatasetExplorer;
     readonly datasetDiscovery: DatasetDiscovery;
+    readonly userSession: UserSession;
     readonly wcsUrlMapper: WcsUrlMapper;
 
     constructor(props: AppStateProps) {
@@ -33,52 +43,17 @@ export class AppState implements HasAppModules {
             })
         });
         this.datasetDiscovery = new DatasetDiscovery(props.discovery);
+        this.userSession = new UserSession();
         this.wcsUrlMapper = props.wcsUrlMapper;
     }
 }
 
 export const createAppStore = (config) => {
-
     const wcsUrlMapper = new WcsUrlMapper({
         discoveryProviders: config.discovery
     });
     const appState = new AppState({
         discovery: {
-            providers: config.discovery.map((item) => {
-                if (item.opensearchUrl) {
-                    return initAdamOpensearchDatasetProvider({
-                        id: item.id,
-                        name: item.name,
-                        factoryConfig: {
-                            wcsServiceUrl: item.wcsUrl,
-                            wpsServiceUrl: item.wpsUrl,
-                            cswServiceUrl: item.cswUrl,
-                            opensearchUrl: item.opensearchUrl,
-                            opensearchMetadataModelVersion: item.opensearchVersion
-                        },
-                        searchClient: new AdamOpensearchDatasetDiscoveryClient({
-                            serviceUrl: item.opensearchUrl,
-                            wcsUrl: item.wcsUrl,
-                            additionalDatasetConfig: item.additionalDatasetConfig,
-                            metadataModelVersion: item.opensearchVersion || AdamOpensearchMetadataModelVersion.V3
-                        }),
-                        isStatic: item.staticCatalogue,
-                        active: false
-                    });
-                } else if (item.opensearchUrlV2) {
-                    return initAdamOpensearchDatasetProviderV2({
-                        id: item.id,
-                        name: item.name,
-                        searchClient: new AdamOpensearchDatasetDiscoveryClientV2({
-                            serviceUrl: item.opensearchUrlV2,
-                            additionalDatasetConfig: item.additionalDatasetConfig
-                        }),
-                        active: false
-                    });
-                } else {
-                    return initFeaturedDatasetsProvider(item);
-                }
-            }),
             footprintStyle: (item) => {
                 const style = defaultDiscoveryFootprintStyle(item) as IFeatureStyle;
                 if (style.polygon) {
@@ -94,10 +69,63 @@ export const createAppStore = (config) => {
                 }
                 return style;
             }
-
         },
         wcsUrlMapper: wcsUrlMapper
     });
+
+    const protectedProviders: Set<string> = new Set();
+
+    appState.datasetDiscovery.addProviders(
+        config.discovery.map((item) => {
+            let axiosInstance: AxiosInstanceWithCancellation | undefined;
+            if (item.protected) {
+                protectedProviders.add(item.id);
+                axiosInstance = appState.userSession.axiosInstance;
+            }
+            if (item.opensearchUrl) {
+                return initAdamOpensearchDatasetProvider({
+                    id: item.id,
+                    name: item.name,
+                    factoryConfig: {
+                        axiosInstance: axiosInstance,
+                        wcsServiceUrl: item.wcsUrl,
+                        wpsServiceUrl: item.wpsUrl,
+                        cswServiceUrl: item.cswUrl,
+                        opensearchUrl: item.opensearchUrl,
+                        opensearchMetadataModelVersion: item.opensearchVersion
+                    },
+                    searchClient: new AdamOpensearchDatasetDiscoveryClient({
+                        axiosInstance: axiosInstance,
+                        serviceUrl: item.opensearchUrl,
+                        wcsUrl: item.wcsUrl,
+                        additionalDatasetConfig: item.additionalDatasetConfig,
+                        metadataModelVersion: item.opensearchVersion || AdamOpensearchMetadataModelVersion.V3
+                    }),
+                    isStatic: item.staticCatalogue,
+                    active: false,
+                    disabled: item.protected && !appState.userSession.accessToken
+                });
+            } else if (item.opensearchUrlV2) {
+                return initAdamOpensearchDatasetProviderV2({
+                    id: item.id,
+                    name: item.name,
+                    searchClient: new AdamOpensearchDatasetDiscoveryClientV2({
+                        axiosInstance: axiosInstance,
+                        serviceUrl: item.opensearchUrlV2,
+                        additionalDatasetConfig: item.additionalDatasetConfig
+                    }),
+                    axiosInstance: axiosInstance,
+                    disabled: item.protected && !appState.userSession.accessToken,
+                    active: false
+                });
+            } else {
+                return initFeaturedDatasetsProvider({
+                    ...item,
+                    axiosInstance: axiosInstance
+                });
+            }
+        })
+    );
 
     const mapModule = initMapModule(config.map);
     appState.modules.addModule(mapModule);
@@ -124,6 +152,16 @@ export const createAppStore = (config) => {
         color: '#1f8fcb'
     });
 
+    reaction(
+        () => appState.userSession.accessToken,
+        (accessToken) => {
+            appState.datasetDiscovery.providers.forEach((provider) => {
+                if (protectedProviders.has(provider.id)) {
+                    provider.setDisabled(!accessToken);
+                }
+            });
+        }
+    );
+
     return appState;
 };
-

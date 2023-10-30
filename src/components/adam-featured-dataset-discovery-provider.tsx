@@ -1,23 +1,30 @@
 import React from 'react';
-
+import { App } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { IFormFieldDefinition, STRING_FIELD_ID } from '@oidajs/core';
 import { DataCollectionCompactListItem, DataCollectionList } from '@oidajs/ui-react-antd';
-import { useFormData, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oidajs/ui-react-mobx';
+import {
+    useFormData,
+    useDataPaging,
+    useDataSorting,
+    useEntityCollectionList,
+    useQueryCriteriaUrlBinding,
+    useMapSelection
+} from '@oidajs/ui-react-mobx';
 import { DatasetExplorer } from '@oidajs/eo-mobx';
 import {
     AdamFeaturedDatasetDiscoveryProvider as AdamDatasetDiscoveryProviderState,
     AdamFeaturedDatasetDiscoveryProviderItem
 } from '@oidajs/eo-adapters-adam';
 
-
 export type AdamFeaturedDatasetDiscoveryProviderProps = {
     provider: AdamDatasetDiscoveryProviderState;
-    datasetExplorer: DatasetExplorer
+    datasetExplorer: DatasetExplorer;
 };
 
 export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetDiscoveryProviderProps) => {
+    const { message } = App.useApp();
 
     const searchFilters: IFormFieldDefinition[] = [
         {
@@ -26,7 +33,7 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
             config: {},
             rendererConfig: {
                 props: {
-                    prefix: (<SearchOutlined/>)
+                    prefix: <SearchOutlined />
                 }
             }
         }
@@ -36,11 +43,16 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
         {
             name: 'Add to map',
             content: 'Add to map',
-            icon: (<PlusOutlined/>),
+            icon: <PlusOutlined />,
             callback: (item: AdamFeaturedDatasetDiscoveryProviderItem) => {
-                return props.provider.createDataset(item).then((datasetConfig) => {
-                    props.datasetExplorer.addDataset(datasetConfig);
-                });
+                return props.provider
+                    .createDataset(item)
+                    .then((datasetConfig) => {
+                        props.datasetExplorer.addDataset(datasetConfig);
+                    })
+                    .catch((error) => {
+                        message.error(`Unable to initialize map layer: ${error}`);
+                    });
             },
             condition: (entity) => {
                 return true;
@@ -60,7 +72,7 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
     });
 
     const sortingProps = useDataSorting({
-        sortableFields: [{key: 'name', name: 'Name'}],
+        sortableFields: [{ key: 'name', name: 'Name' }],
         sortingState: props.provider.criteria.sorting
     });
 
@@ -72,14 +84,12 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
         selectionManager: mapSelection
     });
 
-
     if (!items) {
         return null;
     }
 
     return (
         <div className='adam-dataset-discovery-provider'>
-
             <DataCollectionList<AdamFeaturedDatasetDiscoveryProviderItem>
                 className='dataset-discovery-results adam-dataset-discovery-results'
                 content={(item) => {
@@ -95,10 +105,14 @@ export const AdamFeaturedDatasetDiscoveryProvider = (props: AdamFeaturedDatasetD
                 itemLayout='vertical'
                 paging={pagingProps}
                 sorting={sortingProps}
-                filters={filteringProps ? {
-                    ...filteringProps,
-                    mainFilter: 'q'
-                } : undefined}
+                filters={
+                    filteringProps
+                        ? {
+                              ...filteringProps,
+                              mainFilter: 'q'
+                          }
+                        : undefined
+                }
                 autoScrollOnSelection={false}
             />
         </div>

@@ -1,13 +1,20 @@
 import React from 'react';
-
+import { App } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 import { IFormFieldDefinition, STRING_FIELD_ID } from '@oidajs/core';
 import { DataCollectionCompactListItem, DataCollectionList } from '@oidajs/ui-react-antd';
-import { useFormData, useDataPaging, useDataSorting, useEntityCollectionList, useQueryCriteriaUrlBinding, useMapSelection } from '@oidajs/ui-react-mobx';
+import {
+    useFormData,
+    useDataPaging,
+    useDataSorting,
+    useEntityCollectionList,
+    useQueryCriteriaUrlBinding,
+    useMapSelection
+} from '@oidajs/ui-react-mobx';
 import { DatasetExplorer } from '@oidajs/eo-mobx';
-import { FeaturedDatasetDiscoveryProvider, FeaturedDatasetDiscoveryProviderItem } from '../store';
 
+import { FeaturedDatasetDiscoveryProvider, FeaturedDatasetDiscoveryProviderItem } from '../store';
 
 export type FeaturedDatasetDiscoveryProviderComponentProps = {
     provider: FeaturedDatasetDiscoveryProvider;
@@ -16,6 +23,7 @@ export type FeaturedDatasetDiscoveryProviderComponentProps = {
 };
 
 export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDatasetDiscoveryProviderComponentProps) => {
+    const { message } = App.useApp();
 
     const searchFilters: IFormFieldDefinition[] = [
         {
@@ -24,7 +32,7 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
             config: {},
             rendererConfig: {
                 props: {
-                    prefix: (<SearchOutlined/>)
+                    prefix: <SearchOutlined />
                 }
             }
         }
@@ -34,14 +42,19 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
         {
             name: 'Add to map',
             content: 'Add to map',
-            icon: (<PlusOutlined/>),
+            icon: <PlusOutlined />,
             callback: (item: FeaturedDatasetDiscoveryProviderItem) => {
-                return props.provider.createDataset(item).then((datasetConfig) => {
-                    props.datasetExplorer.addDataset(datasetConfig);
-                    if (props.onDatasetAdd) {
-                        props.onDatasetAdd();
-                    }
-                });
+                return props.provider
+                    .createDataset(item)
+                    .then((datasetConfig) => {
+                        props.datasetExplorer.addDataset(datasetConfig);
+                        if (props.onDatasetAdd) {
+                            props.onDatasetAdd();
+                        }
+                    })
+                    .catch((error) => {
+                        message.error(`Unable to initialize map layer: ${error}`);
+                    });
             },
             condition: (entity) => {
                 return true;
@@ -61,7 +74,7 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
     });
 
     const sortingProps = useDataSorting({
-        sortableFields: [{key: 'name', name: 'Name'}],
+        sortableFields: [{ key: 'name', name: 'Name' }],
         sortingState: props.provider.criteria.sorting
     });
 
@@ -73,14 +86,12 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
         selectionManager: mapSelection
     });
 
-
     if (!items) {
         return null;
     }
 
     return (
         <div className='adam-dataset-discovery-provider'>
-
             <DataCollectionList<FeaturedDatasetDiscoveryProviderItem>
                 className='dataset-discovery-results adam-dataset-discovery-results'
                 content={(item) => {
@@ -97,10 +108,14 @@ export const FeaturedDatasetDiscoveryProviderComponent = (props: FeaturedDataset
                 itemLayout='vertical'
                 paging={pagingProps}
                 sorting={sortingProps}
-                filters={filteringProps ? {
-                    ...filteringProps,
-                    mainFilter: 'q'
-                } : undefined}
+                filters={
+                    filteringProps
+                        ? {
+                              ...filteringProps,
+                              mainFilter: 'q'
+                          }
+                        : undefined
+                }
                 autoScrollOnSelection={false}
             />
         </div>
