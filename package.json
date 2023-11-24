@@ -76,6 +76,6 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.6.1",
     "react-router-dom": "^6.6.1",
-    "shpjs": "^3.4.3"
+    "shpjs": "^4.0.4"
   }
 }
